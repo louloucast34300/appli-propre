@@ -4,4 +4,4 @@ router.use('/api/user', (req,res)=>{
     res.send("ok");
 });
 
-moduule.exports =router;
+module.exports =router;
