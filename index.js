@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const routing = require('./backend/routes');
 const port = process.env.PORT || 5001;
+require('./backend/BDD/connexion');
 
 exports.app= app;
 
