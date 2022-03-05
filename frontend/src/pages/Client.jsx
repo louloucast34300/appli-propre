@@ -1,11 +1,14 @@
 //structure
 import React, {useState,useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, Link} from 'react-router-dom';
 import axios from 'axios';
 
 //css & icons
 import {AiOutlinePlus} from 'react-icons/ai'
 import {GiTireIronCross} from 'react-icons/gi'
+import {FiEdit} from 'react-icons/fi'
+import {BsEye} from 'react-icons/bs'
+import {IoIosArrowForward} from 'react-icons/io'
 import '../css/general.css'
 const Client = () => {
 
@@ -79,13 +82,30 @@ const decodeQuery = () =>{
                     <button onClick={activePopUp}> <AiOutlinePlus/> Ajouter Client</button>
                    
                 </div>
+                <div className="table-content">
+                <div className="row table-list">
+                    <div className="col-lg-3">Docteur</div>
+                    <div className="col-lg-3">email</div>
+                    <div className="col-lg-3">téléphone</div>
+                    <div className="col-lg-3">actions</div>
+                </div>
                 {dataClient.map((client,index)=>{
                         return(
-                           <div key={index}>
-                               <p>{client.username}</p>
-                            </div>
+                     
+                                <div className="row table-item" key={index}>
+                                   
+                                    <div className="col-lg-3">Dr. {client.lastname} {client.username}</div>
+                                 
+                                    <div className="col-lg-3 email-col"><p>{client.email}</p></div>
+                                    <div className="col-lg-3 phone-col"><p>{client.phone}</p></div>
+                                   
+                                    <div className="col-lg-2 action-col"><a href="/client"><FiEdit/></a> <a href="#"><GiTireIronCross/></a> <a href="#"><BsEye/></a></div>
+                                    <div className="col-lg-1 arrow-col"><Link to={{pathname:`/client/${client._id}`}}><IoIosArrowForward/></Link></div>
+                                </div>
+               
                         )
                     })}
+                </div>
             </div>
             }
         </div>

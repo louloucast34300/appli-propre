@@ -1,3 +1,7 @@
+body{
+    background: rgb(242,250,255);
+    background: linear-gradient(90deg, rgba(242,250,255,1) 0%, rgba(96,186,237,.4) 100%);
+}
 .color1{
     background-color:#3A3E4A;
     padding:0;
@@ -110,7 +114,31 @@ h1,h2,h3,h4,h5,p,a{
 }
 
 /* client page */
-
+.table-content{
+    margin-top:30px;
+}
+.table-list{
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    background:#60BAED;
+    color:white;
+}
+.table-item{
+    background:#F2FAFF;
+    padding:10px 0px;
+    border-bottom:.5px solid #3A3E4A;
+}
+.arrow-col svg{
+    color:#60BAED;
+    float:right;
+}
+.action-col svg{
+    margin:0px 5px;
+}
+.email-col p, .phone-col p{
+    margin-top:3px;
+    font-size:14px;
+}
 .header-page{
     display:flex;
     flex-direction:row;
