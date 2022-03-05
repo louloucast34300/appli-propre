@@ -1,15 +1,25 @@
+const {
+    createDoctor,
+    listDoctor
+} = require('../query/clients.query');
+
 
 exports.doctorCreate = async (req, res, next) =>{
+    const body = req.body
     try{
-        res.send('doctorCreate OK')
+        console.log(body)
+        const client = await createDoctor(body);
+        res.redirect(`/client?message=${encodeURIComponent('Nouveau client enregistré.')}`);
     }catch(e){
         next(e);
     }
 }
 
 exports.doctorList = async (req, res, next) =>{
+    console.log("test ok")
     try{
-        res.send('doctorList OK')
+        const client = await listDoctor();
+        res.send(client)
     }catch(e){
         next(e);
     }
