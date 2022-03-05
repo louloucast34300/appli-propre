@@ -12,7 +12,7 @@ exports.doctorCreate = async (req, res, next) =>{
         const client = await createDoctor(body);
        
             res.sendFile(
-                path.join(__dirname, "./frontend/build:index.html"),
+                path.join(__dirname, "../../frontend/build:index.html"),
                 function(err){
                     if(err){
                         res.status(500).send(err);
