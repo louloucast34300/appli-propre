@@ -11,7 +11,10 @@ exports.doctorCreate = async (req, res, next) =>{
     try{
         console.log(body)
         const client = await createDoctor(body);
-       res.redirect(path.join(__dirname,`client?message=${encodeURIComponent('Nouveau client enregistré.')}`));
+        let filePath ="./frontend/build:index.html";
+        let resolvedPath = path.resolve(filePath);
+        res.sendFile(resolvedPath);
+      /* res.redirect(`client?message=${encodeURIComponent('Nouveau client enregistré.')}`);*/
        
     }catch(e){
         next(e);
