@@ -11,9 +11,7 @@ exports.doctorCreate = async (req, res, next) =>{
     try{
         console.log(body)
         const client = await createDoctor(body);
-        let filePath ="./frontend/build:index.html";
-        let resolvedPath = path.resolve(filePath);
-        res.sendFile(resolvedPath).redirect('/client');
+        res.redirect('https://smile-art-gestion.fr/client')
       /* res.redirect(`client?message=${encodeURIComponent('Nouveau client enregistré.')}`);*/
        
     }catch(e){
