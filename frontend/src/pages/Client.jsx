@@ -20,6 +20,7 @@ useEffect(()=>{
     axios.get(`/api/clients`).then((res)=>{
         const response = res.data;
         setDataClient(response);
+        
     })
 },[])
 
