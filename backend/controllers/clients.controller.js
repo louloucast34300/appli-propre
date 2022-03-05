@@ -10,7 +10,7 @@ exports.doctorCreate = async (req, res, next) =>{
     try{
         console.log(body)
         const client = await createDoctor(body);
-        res.redirect(`/client?message=${encodeURIComponent('Nouveau client enregistré.')}`);
+        res.redirect(`/?message=${encodeURIComponent('Nouveau client enregistré.')}`);
   
        
     }catch(e){
