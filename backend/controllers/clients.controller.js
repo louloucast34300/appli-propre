@@ -10,17 +10,7 @@ exports.doctorCreate = async (req, res, next) =>{
     try{
         console.log(body)
         const client = await createDoctor(body);
-       
-            res.sendFile(
-                path.join(__dirname, "../../frontend/build:index.html"),
-                function(err){
-                    if(err){
-                        res.status(500).send(err);
-                    }
-                }
-            )
-        
-      /* res.redirect(`client?message=${encodeURIComponent('Nouveau client enregistré.')}`);*/
+        res.redirect(`client?message=${encodeURIComponent('Nouveau client enregistré.')}`);
        
     }catch(e){
         next(e);
