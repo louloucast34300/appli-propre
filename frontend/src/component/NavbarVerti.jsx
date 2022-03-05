@@ -38,7 +38,7 @@ const splitLocation = pathname.split("/");
                 <Link to="/order" className="nav-link"><RiListOrdered/><span>Commandes</span></Link>
               </li>
               <li className={splitLocation[1]==="facturation"?"nav-item active":"nav-item"}>
-                <a href="/facturation" className="nav-link"><FaFileInvoice/><span>Facturations</span></a>
+                <Link to="/facturation" className="nav-link"><FaFileInvoice/><span>Facturations</span></Link>
               </li>
               <li className="nav-item">
                 <Link to="" className="nav-link"><AiOutlinePoweroff/><span>Déconnexion</span></Link>
