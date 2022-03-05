@@ -1,3 +1,5 @@
+const path = require('path')
+const app = require('../../index');
 const {
     createDoctor,
     listDoctor
@@ -9,7 +11,18 @@ exports.doctorCreate = async (req, res, next) =>{
     try{
         console.log(body)
         const client = await createDoctor(body);
-        res.redirect(`/client?message=${encodeURIComponent('Nouveau client enregistré.')}`);
+       /* res.redirect(`/client?message=${encodeURIComponent('Nouveau client enregistré.')}`);*/
+       app.use(express.static(path.join(__dirname, "./frontend/build")));
+        app.get("*",function(_, res){
+        res.sendFile(
+            path.join(__dirname, "./frontend/build:index.html"),
+            function(err){
+             if(err){
+                 res.status(500).send(err);
+            }
+        }
+    )
+});
     }catch(e){
         next(e);
     }
