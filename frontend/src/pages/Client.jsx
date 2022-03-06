@@ -15,6 +15,7 @@ const Client = () => {
 const [popUp, setPopUp] = useState(false); // ouvrir-fermer le formulaire 
 const [messageSuccess,setMessageSuccess] = useState("");// message dans l'URL après formulaire réussi
 const [dataClient, setDataClient] = useState([]);
+const [buttonName, SetButtonnName] = useState('');
 const location = useLocation();
 
 console.log(dataClient);
@@ -41,43 +42,63 @@ const decodeQuery = () =>{
     setMessageSuccess(decode2)
     console.log(decode2);
 }
-
+const NameButton= (e) =>{
+    e.preventDefault();
+    const value = e.target.value;
+    SetButtonnName(value);
+}
 
   return (
     <div className="container-fluid">
         <div className="row">
             <div className="col-lg-12">
+
             {popUp? 
             <div>
             <div className="header-page">
-                <h3>Clients</h3>
+                <h3 className="header-title">Clients</h3>
                 <button onClick={DesactivePopUp}> <GiTireIronCross/> Fermer formulaire </button>
               </div>
-              <div>
-                <form action="/api/clients/new-doctor" method="POST">
-                        <label htmlFor="username">username</label>
-                        <input type="text" id="username" name="username" />
-                        <label htmlFor="lastname">lastname</label>
-                        <input type="text" id="lastname" name="lastname" />
-                        <label htmlFor="email">email</label>
-                        <input type="text" id="email" name="email" />
-                        <label htmlFor="address">adresse</label>
-                        <input type="text" id="address" name="address" />
-                        <label htmlFor="phone">phone</label>
-                        <input type="number" id="phone" name="phone"/>
-                        <label htmlFor="n_siret">n°siret</label>
-                        <input type="text" id="n_siret" name="n_siret" />
-                        <button type="submit">Création d'un nouveau client</button>
-                    </form>
+              <div className="form-content">
+              <form action="/api/clients/new-doctor" method="POST" className="form-client">
+                <div className="row mb-4">
+                <div className="col">
+                    <div className="form-outline">
+                        <input type="text" id="username" className="form-control" name="username" placeholder="Prénom"/>
+                    </div>
+                </div>
+                <div className="col">
+                    <div className="form-outline">
+                        <input onChange={NameButton} type="text" id="lastname" className="form-control" name="lastname" placeholder="Nom"/>
+                    </div>
+                </div>
+                </div>
+                <div className="form-outline mb-4">
+                    <input type="text" id="n_siret" className="form-control" name="n_siret" placeholder="N° de siret du client"/>
+                </div>
+                <div className="form-outline mb-4">
+                    <input type="text" id="address" className="form-control" name="address" placeholder="Adresse postal" />
+                </div>
+                <div className="form-outline mb-4">
+                    <input type="email" id="email" className="form-control"  name="email" placeholder="Email"/>
+                </div>
+                <div className="form-outline mb-4">
+                    <input type="number" id="phone" className="form-control" name="phone" placeholder="Téléphone"/>
+                </div>
+                <div className="form-outline mb-4">
+                    <textarea className="form-control" id="infos"  name="infos" rows="4" placeholder="Informations complémentaires"></textarea>
+                </div>
+                    <button type="submit" className="btn-form">Enregistrer le Dr. {buttonName}</button>
+            </form>
                
                 </div>
             </div>
             : 
             <div>
                 <div className="header-page">
-                    <h3>Clients</h3>
+                    <h3 className="header-title">Clients</h3>
                     <div>
-                        <h3>{messageSuccess}</h3>
+                        <h3 className={messageSuccess===""?"message-success":"message-success active"}>{messageSuccess}</h3>
                     </div>
                     <button onClick={activePopUp}> <AiOutlinePlus/> Ajouter Client</button>
                    
@@ -102,7 +123,6 @@ const decodeQuery = () =>{
                                     <div className="col-lg-2 action-col"><a href="/client"><FiEdit/></a> <a href="#"><GiTireIronCross/></a> <a href="#"><BsEye/></a></div>
                                     <div className="col-lg-1 arrow-col"><Link to={{pathname:`/client/${client._id}`}}><IoIosArrowForward/></Link></div>
                                 </div>
-               
                         )
                     })}
                 </div>

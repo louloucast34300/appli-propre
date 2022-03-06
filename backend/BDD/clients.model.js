@@ -7,7 +7,8 @@ const clientSchema = schema ({
     email:{type:String},
     address:{type:String},
     phone:{type:Number},
-    n_siret:{type:String}
+    n_siret:{type:String},
+    infos:{type:String}
 },{
     timestamp:true,
 });

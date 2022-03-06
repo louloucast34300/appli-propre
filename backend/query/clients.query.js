@@ -7,8 +7,8 @@ exports.createDoctor = (body) =>{
         email : body.email,
         address : body.address,
         phone: body.phone,
-        n_siret: body.n_siret
-
+        n_siret: body.n_siret,
+        infos : body.infos
     });
     return newClient.save();
 };
