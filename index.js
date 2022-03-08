@@ -7,7 +7,8 @@ require('./backend/BDD/connexion');
 
 exports.app= app;
 
-
+require('./backend/config/session.config');
+require('./backend/config/passport.config');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));

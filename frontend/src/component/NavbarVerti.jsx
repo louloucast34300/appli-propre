@@ -12,7 +12,11 @@ import {RiListOrdered} from 'react-icons/ri';
 import {FaFileInvoice} from 'react-icons/fa';
 import {AiOutlinePoweroff} from 'react-icons/ai';
 
-const NavbarVerti = () => {
+const NavbarVerti = (props) => {
+
+const deconnexion = props.delete;
+
+
 
 const location = useLocation();
 const {pathname} = location;
@@ -41,7 +45,7 @@ const splitLocation = pathname.split("/");
                 <Link to="/facturation" className="nav-link"><FaFileInvoice/><span>Facturations</span></Link>
               </li>
               <li className="nav-item">
-                <Link to="" className="nav-link"><AiOutlinePoweroff/><span>Déconnexion</span></Link>
+                <button onClick={deconnexion} className="nav-link"><AiOutlinePoweroff/><Link to="/connexion">Deconnexion</Link></button>
               </li>
             </ul>
           </div>

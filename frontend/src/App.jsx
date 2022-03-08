@@ -1,6 +1,7 @@
 //import de structure
-import react from 'react';
-import {BrowserRouter as Router, Route, Routes as Switch} from 'react-router-dom';
+import react, {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Route, Routes as Switch, Navigate} from 'react-router-dom';
+import axios from 'axios';
 
 //components
 import NavbarHori from './component/NavbarHori'
@@ -12,16 +13,34 @@ import Client from './pages/Client'
 import Prestation from './pages/Prestation';
 import Order from './pages/Order';
 import Facturation from './pages/Facturation';
+import Inscription from './pages/Inscription';
+import Connexion from './pages/Connexion';
 //css
 import './css/general.css'
 
 function App() {
+const [user, setUser] = useState([])
+
+console.log(user);
+
+useEffect(()=>{
+  axios.get('/api/user/user-info').then((res)=>{
+    const response = res.data;
+    setUser(()=>response)
+  });
+},[])
+
+  const deleteSession = async () =>{
+    setUser([]);
+    await axios.get("/api/user/signout");
+    window.location.reload();
+}
   return (
     <Router>
     <div className="container-fluid">
       <div className="row">
         <div className="col-lg-2 color1">
-          <NavbarVerti/>
+          <NavbarVerti delete={deleteSession}/>
         </div>
         <div className="col-lg-10 color2">
           <NavbarHori/>
@@ -29,11 +48,13 @@ function App() {
         <div className="col-lg-2"></div>
         <div className="col-lg-10">
               <Switch>
-                <Route path="/" element={<Dashboard/>}/>
-                <Route path="/client" element={<Client/>}/>
-                <Route path="/prestation" element={<Prestation/>}/>
-                <Route path="/order" element={<Order/>}/>
-                <Route path="/facturation" element={<Facturation/>}/>
+                <Route path="/" element={user?<Dashboard/>:<Navigate to="/connexion"/>}/>
+                <Route path="/client" element={user?<Client/>:<Navigate to="/connexion"/>}/>
+                <Route path="/prestation" element={user?<Prestation/>:<Navigate to="/connexion"/>}/>
+                <Route path="/order" element={user?<Order/>:<Navigate to="/connexion"/>}/>
+                <Route path="/facturation" element={user?<Facturation/>:<Navigate to="/connexion"/>}/>
+                <Route path="/inscription" element={user?<Inscription/>:<Navigate to="/connexion"/>}/>
+                <Route path="/connexion" element={<Connexion/>}/>
               </Switch>
         </div>
         </div>
