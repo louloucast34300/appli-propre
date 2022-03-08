@@ -16,3 +16,7 @@ exports.createDoctor = (body) =>{
 exports.listDoctor = () =>{
     return Client.find().exec();
 }
+
+exports.deleteDoctor = (clientId) =>{
+    return Client.findByIdAndDelete({_id : clientId}).exec();
+}

@@ -1,7 +1,8 @@
 const path = require('path')
 const {
     createDoctor,
-    listDoctor
+    listDoctor,
+    deleteDoctor,
 } = require('../query/clients.query');
 
 
@@ -17,7 +18,6 @@ exports.doctorCreate = async (req, res, next) =>{
 }
 
 exports.doctorList = async (req, res, next) =>{
-    console.log("test ok")
     try{
         const client = await listDoctor();
         res.send(client)
@@ -43,8 +43,10 @@ exports.doctorUpdate = async (req, res, next) =>{
 }
 
 exports.doctorDelete = async (req, res, next) =>{
+    const clientId = req.params.doctorID;
+    console.log(clientId)
     try{
-        res.send('doctorDelete OK')
+       await deleteDoctor(clientId);
     }catch(e){
         next(e);
     }
