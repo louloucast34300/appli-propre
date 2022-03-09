@@ -5,7 +5,7 @@ import {Link,useLocation} from 'react-router-dom';
 
 //css & icons
 import Logo from '../image/logo-crm-smile-color.png';
-import '../css/general.css'
+import '../css/navbarVerti.css';
 import {MdOutlineDashboard,MdOutlineWorkspaces} from 'react-icons/md';
 import {IoPersonOutline} from 'react-icons/io5';
 import {RiListOrdered} from 'react-icons/ri';

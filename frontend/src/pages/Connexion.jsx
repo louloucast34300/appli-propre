@@ -1,7 +1,8 @@
 import React from 'react'
 
 import Logo from '../image/logo-crm-smile-color.png';
-import '../css/general.css'
+
+import '../css/connexion.css';
 const Connexion  = () => {
   return (
     <div className="window-connexion">

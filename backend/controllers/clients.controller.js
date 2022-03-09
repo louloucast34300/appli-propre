@@ -3,6 +3,8 @@ const {
     createDoctor,
     listDoctor,
     deleteDoctor,
+    editDoctor,
+    updateDoctor,
 } = require('../query/clients.query');
 
 
@@ -27,16 +29,22 @@ exports.doctorList = async (req, res, next) =>{
 }
 
 exports.doctorEdit = async (req, res, next) =>{
+    const clientId = req.params.doctorID
+    console.log(clientId)
     try{
-        res.send('doctorEdit OK')
+        const client = await editDoctor(clientId);
+        res.send(client);
     }catch(e){
         next(e);
     }
 }
 
 exports.doctorUpdate = async (req, res, next) =>{
+    const clientId = req.params.doctorID;
+    const body = req.body;
     try{
-        res.send('doctorUpdate OK')
+       const client = await updateDoctor(clientId, body);
+       res.redirect(`/client?message=${encodeURIComponent('Modifications enregistrées')}`);
     }catch(e){
         next(e);
     }

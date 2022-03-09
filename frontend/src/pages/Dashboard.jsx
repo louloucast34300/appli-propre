@@ -1,7 +1,7 @@
 import React from 'react'
 import PieChart from '../charts/pieChart';
 
-import '../css/general.css';
+import '../css/dashboard.css';
 const Dashboard = () => {
   return (
     <div className="container-fluid">

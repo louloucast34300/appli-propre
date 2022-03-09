@@ -15,6 +15,7 @@ import Order from './pages/Order';
 import Facturation from './pages/Facturation';
 import Inscription from './pages/Inscription';
 import Connexion from './pages/Connexion';
+import EditClient from './pages/EditClient';
 //css
 import './css/general.css'
 
@@ -54,6 +55,7 @@ useEffect(()=>{
                 <Route path="/order" element={user?<Order/>:<Navigate to="/connexion"/>}/>
                 <Route path="/facturation" element={user?<Facturation/>:<Navigate to="/connexion"/>}/>
                 <Route path="/inscription" element={user?<Inscription/>:<Navigate to="/connexion"/>}/>
+                <Route path="/client/edit/:clientId" element={user?<EditClient/>:<Navigate to="/connexion"/>}/>
                 <Route path="/connexion" element={<Connexion/>}/>
               </Switch>
         </div>

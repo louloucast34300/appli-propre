@@ -4,12 +4,13 @@ import {useLocation, Link} from 'react-router-dom';
 import axios from 'axios';
 
 //css & icons
+import '../css/clients.css'
 import {AiOutlinePlus} from 'react-icons/ai'
 import {GiTireIronCross} from 'react-icons/gi'
 import {FiEdit} from 'react-icons/fi'
 import {BsEye} from 'react-icons/bs'
 import {IoIosArrowForward} from 'react-icons/io'
-import '../css/general.css'
+
 
 const Client = () => {
 
@@ -101,7 +102,7 @@ const DeleteData = (e) =>{ // delete la data ciblé , ferme la popUp delete et r
                 <h3 className="header-title">Clients</h3>
                 <button onClick={DesactivePopUp}> <GiTireIronCross/> Fermer formulaire </button>
               </div>
-              <div className="form-content">
+              <div className="form-content-new">
               <form action="/api/clients/new-doctor" method="POST" className="form-client">
                 <div className="row mb-4">
                 <div className="col">
@@ -156,7 +157,7 @@ const DeleteData = (e) =>{ // delete la data ciblé , ferme la popUp delete et r
                             <div className="col-lg-3">Dr. {client.lastname} {client.username}</div>
                             <div className="col-lg-3 email-col"><p>{client.email}</p></div>
                             <div className="col-lg-3 phone-col"><p>{client.phone}</p></div>
-                            <div className="col-lg-2 action-col"><a href="/client"><FiEdit/></a> <a id={client._id} onClick={acitveDeletePopUp}><GiTireIronCross/></a> <a href="#"><BsEye/></a></div>
+                            <div className="col-lg-2 action-col"><Link to={`/client/edit/${client._id}`}><FiEdit/></Link> <a id={client._id} onClick={acitveDeletePopUp}><GiTireIronCross/></a> <Link to={{pathname:`/client/${client._id}`}}><BsEye/></Link></div>
                             <div className="col-lg-1 arrow-col"><Link to={{pathname:`/client/${client._id}`}}><IoIosArrowForward/></Link></div>
                         </div>
                         )

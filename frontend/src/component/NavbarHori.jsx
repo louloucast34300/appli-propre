@@ -1,5 +1,6 @@
 import React from 'react'
-import '../css/general.css'
+
+import '../css/navbarHori.css'
 import {BsSearch,BsBell} from 'react-icons/bs';
 import {IoPersonOutline} from 'react-icons/io5';
 
