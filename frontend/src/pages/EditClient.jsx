@@ -104,7 +104,7 @@ useEffect(()=>{
                     placeholder="Informations complémentaires"
                     defaultValue={dataForm.infos}></textarea>
                 </div>
-                    <button type="submit" className="btn-form">Enregistrer le Dr.</button>
+                    <button type="submit" className="btn-form">Enregistrer les modifications</button>
             </form>
                 </div>
             </div> 

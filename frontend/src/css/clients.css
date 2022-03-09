@@ -9,9 +9,14 @@
     color:white;
 }
 .table-item{
-    background:#F2FAFF;
+    background:#f0f8fdb9;
     padding:10px 0px;
     border-bottom:.5px solid #3A3E4A;
+    transition:all .1s ease-in-out;
+}
+.table-item:hover{
+    background:#dff0fa;
+    transition:all .1s ease-in-out;
 }
 .arrow-col svg{
     color:#60BAED;

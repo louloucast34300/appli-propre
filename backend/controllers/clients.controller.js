@@ -5,6 +5,7 @@ const {
     deleteDoctor,
     editDoctor,
     updateDoctor,
+    detailDoctor,
 } = require('../query/clients.query');
 
 
@@ -61,8 +62,10 @@ exports.doctorDelete = async (req, res, next) =>{
 }
 
 exports.doctorDetail = async (req, res, next) =>{
+    const clientId = req.params.doctorID;
     try{
-        res.send('doctorDetail OK')
+       const client = await detailDoctor(clientId);
+       res.send(client);
     }catch(e){
         next(e);
     }

@@ -38,3 +38,7 @@ exports.updateDoctor = (clientId, body) =>{
         }
     })
 };
+
+exports.detailDoctor = (clientId) =>{
+    return Client.findById({_id : clientId}).exec();
+}

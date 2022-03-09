@@ -1,6 +1,6 @@
 body{
     background: rgb(242,250,255);
-    background: linear-gradient(90deg, rgba(242,250,255,1) 0%, rgba(96,186,237,.4) 100%);
+    background: linear-gradient(90deg, rgba(242,250,255,1) 0%, rgba(242,250,255,1) 15%, rgba(96,186,237,.3) 100%);
 }
 .color1{
     background-color:#3A3E4A;
