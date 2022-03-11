@@ -17,6 +17,7 @@ import Inscription from './pages/Inscription';
 import Connexion from './pages/Connexion';
 import EditClient from './pages/EditClient';
 import ClientDetail from './pages/ClientDetail';
+import EditPrestation from './pages/EditPrestation';
 //css
 import './css/general.css'
 
@@ -53,6 +54,7 @@ useEffect(()=>{
                 <Route path="/" element={user?<Dashboard/>:<Navigate to="/connexion"/>}/>
                 <Route path="/client" element={user?<Client/>:<Navigate to="/connexion"/>}/>
                 <Route path="/prestation" element={user?<Prestation/>:<Navigate to="/connexion"/>}/>
+                <Route path="/prestation/edit/:prestaId" element={user?<EditPrestation/>:<Navigate to="/connexion"/>}/>
                 <Route path="/order" element={user?<Order/>:<Navigate to="/connexion"/>}/>
                 <Route path="/facturation" element={user?<Facturation/>:<Navigate to="/connexion"/>}/>
                 <Route path="/inscription" element={user?<Inscription/>:<Navigate to="/connexion"/>}/>
