@@ -1,0 +1,87 @@
+.presta-part{
+    position:relative;
+    background-color: rgba(58, 62, 74,1);
+    padding:20px;
+    border-radius:10px;
+    margin:20px 10px;
+};
+
+.presta-content-flex{
+ color:red;
+}
+.price-info{
+    color:white;
+    background-color:rgba(184, 50, 162,1);
+    padding: 10px 70px;
+    margin-right: -20px;
+}
+#presta{
+    margin-top:10px;
+}
+.input-pesta-part{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+}
+.label-input{
+    color:white;
+}
+.input-presta{
+    background-color: transparent;
+    border:none;
+    border-bottom:1px solid white;
+    color:white;
+}
+.input-presta::placeholder{
+    font-size:10px;
+}
+
+
+.teeth-part{
+    margin-top:30px;
+}
+.teeth{
+    height:100px;
+    margin:0px 10px;
+    padding-top:50px;
+}
+.bgt1{
+    background-image: url('../image/dents/dent16.svg');
+    background-repeat: no-repeat;
+}
+input[type="checkbox"] {
+    display: none;
+}
+.teeth{
+    cursor: pointer;
+    color: white;
+}
+.teeth-part input:checked + label{
+    color:#B832A2;
+}
+
+.add-presta{
+    height: 181px;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(58, 62, 74,.3);
+    padding:20px;
+    border-radius:10px;
+    margin:20px 10px;
+    border: 2px dotted rgba(58, 62, 74,1);
+}
+.add-presta button{
+    background-color: #B832A2;
+    border:none;
+    border-radius:5px;
+    color:white;
+    font-size:14px;
+    padding:10px 20px;
+    transition: all .2s ease-in-out;
+}
+.add-presta button:hover{
+    transform: scale(1.1);
+    transition: all .2s ease-in-out;
+}

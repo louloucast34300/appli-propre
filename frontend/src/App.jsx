@@ -1,5 +1,5 @@
 //import de structure
-import react, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Routes as Switch, Navigate} from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,6 +18,7 @@ import Connexion from './pages/Connexion';
 import EditClient from './pages/EditClient';
 import ClientDetail from './pages/ClientDetail';
 import EditPrestation from './pages/EditPrestation';
+import Commande from './pages/Commande';
 //css
 import './css/general.css'
 
@@ -55,11 +56,11 @@ useEffect(()=>{
                 <Route path="/client" element={user?<Client/>:<Navigate to="/connexion"/>}/>
                 <Route path="/prestation" element={user?<Prestation/>:<Navigate to="/connexion"/>}/>
                 <Route path="/prestation/edit/:prestaId" element={user?<EditPrestation/>:<Navigate to="/connexion"/>}/>
-                <Route path="/order" element={user?<Order/>:<Navigate to="/connexion"/>}/>
                 <Route path="/facturation" element={user?<Facturation/>:<Navigate to="/connexion"/>}/>
                 <Route path="/inscription" element={user?<Inscription/>:<Navigate to="/connexion"/>}/>
                 <Route path="/client/edit/:clientId" element={user?<EditClient/>:<Navigate to="/connexion"/>}/>
                 <Route path="/client/:clientId" element={user?<ClientDetail/>:<Navigate to="/connexion"/>}/>
+                <Route path="/order" element={user?<Commande/>:<Navigate to="/connexion"/>}/>
                 <Route path="/connexion" element={<Connexion/>}/>
               </Switch>
         </div>

@@ -135,7 +135,7 @@ const removeFields = () =>{
                     {dataPresta.filter((item)=>item.category === "prothèse adjointe résine")
                         .map((item,index)=>{
                           return(
-                            <div className="col-lg-2">
+                            <div className="col-lg-12">
                               <div key={index} className="presta-card-bloc">
                               <Link className="link-presta-card" to="#">
                                 <p className="title-presta-card">{item.title_presta}</p>
@@ -164,7 +164,7 @@ const removeFields = () =>{
                     {dataPresta.filter((item)=>item.category === "prothèse adjointe métallique")
                         .map((item,index)=>{
                           return(
-                            <div className="col-lg-2">
+                            <div className="col-lg-12">
                               <div key={index} className="presta-card-bloc">
                               <Link className="link-presta-card" to="#">
                                 <p className="title-presta-card">{item.title_presta}</p>

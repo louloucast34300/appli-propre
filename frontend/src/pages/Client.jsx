@@ -23,6 +23,7 @@ const [dataTargetID, setDataTargetID] = useState(""); // récupère l'ID du clie
 const [buttonName, SetButtonnName] = useState(''); // ajouter le nom dynamiquement sur le bouton du formulaire de création d'un client
 const location = useLocation();// pour récupèrer le message de réussite de l'ajout d'un client dans les paramètres de l'url
 
+console.log(dataClient);
 useEffect(()=>{
     decodeQuery();
     GetData();

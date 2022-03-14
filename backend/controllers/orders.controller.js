@@ -1,7 +1,9 @@
 
 exports.orderCreate = async (req, res, next) => {
+    const body = req.body
     try{
-        res.send('orderCreate OK');
+        console.log(body)
+        res.end();
     }catch(e){
         next(e);
     }
