@@ -34,3 +34,18 @@ h1,h2,h3,h4,h5,p,a{
 .bloc-content h5{
     text-align:center;
 }
+.header-title{
+    position:relative;
+}
+.header-content{
+    position:relative;
+}
+.header-title::after, .header-content::after{
+    position:absolute;
+    content:'';
+    width:300px;
+    height:2px;
+    background-color:rgba(184, 50, 162,1);
+    top:38px;
+    left:0px;
+}

@@ -7,13 +7,17 @@ import {AiOutlinePlus} from 'react-icons/ai';
 import {VscDash} from 'react-icons/vsc';
 import {FiEdit} from 'react-icons/fi';
 import {GiTireIronCross} from 'react-icons/gi';
+import {BsEye} from 'react-icons/bs'
 const Prestation = () => {
 
   const [popUpForm, setPopUpForm] = useState(false); // ouvrir-fermer le formulaire 
   const [dataPresta, setDataPresta] = useState([]); // data des prestations
   const [messageSuccess, setMessageSuccess] = useState(""); //message d'ajout d'une prestation
   const location = useLocation();// pour récupèrer le message de réussite de l'ajout d'un client dans les paramètres de l'url
-
+  
+  const [searchPresta, setSearchPresta] = useState('')
+  const [searchCategory, setSearchCategory] = useState('')
+  const [searchPrice, setSearchPrice] = useState()
   console.log(dataPresta);
 
 useEffect(()=>{
@@ -39,8 +43,6 @@ const decodeQuery = () =>{ // pour récupérer le message dans l'url après vali
   console.log(decode2);
 }
 
-
-
 const addFields = () => {
   const survey_options = document.getElementById('survey_options');
   const newField = document.createElement('input');
@@ -57,6 +59,21 @@ const removeFields = () =>{
   if(input_tags.length > 1){
     survey_options.removeChild(input_tags[(input_tags.length)-1])
   }
+}
+
+const handle_Search_Presta = (e) =>{
+  const value = e.target.value;
+  setSearchPresta(value)
+}
+
+const handle_Search_Category = (e) =>{
+  const value = e.target.value;
+  setSearchCategory(value)
+}
+
+const handle_Search_Price = (e) =>{
+  const value = e.target.value;
+  setSearchPrice(value)
 }
   return (
     <div className="container-fluid">
@@ -125,296 +142,76 @@ const removeFields = () =>{
               </div>
               <button onClick={activePopUp}> <AiOutlinePlus/>Ajouter une prestation</button>
             </div>
-              {/* PROTHESE ADJOINTE RESINE*/}
-              <div className="row table-presta">
+              <div className="container">
+                <div className="row table-presta">
                 <div className="col-lg-12">
-                  <h4>Prothèse adjointe résine</h4>
-                  <div className="line-presta"></div>
                   <div className="presta-bloc">
                     <div className="row">
-                    {dataPresta.filter((item)=>item.category === "prothèse adjointe résine")
-                        .map((item,index)=>{
-                          return(
+                        <div className="search-bloc-presta">
+                        <div className="bloc-search">
+                           <p className="title-bloc-search">Rechercher une prestation </p>
+                          </div>
+                          <div className="bloc-search">
+                            <label htmlFor="presta-search">Prestation :</label>
+                            <input type="text" id="presta-search" onChange={handle_Search_Presta}/>
+                          </div>
+                          <div className="bloc-search">
+                            <label htmlFor="category-search">Categorie :</label>
+                            <input type="text" id="category-search" onChange={handle_Search_Category}/>
+                          </div>
+                          <div className="bloc-search">
+                            <label htmlFor="price-search">Prix :</label>
+                            <input type="text" id="price-search" onChange={handle_Search_Price} />
+                          </div>
+                        </div>
                             <div className="col-lg-12">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* PROTHESE ADJOINTE METALLIQUE*/}
-              <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Prothèse adjointe métallique</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "prothèse adjointe métallique")
-                        .map((item,index)=>{
+                            {dataPresta.filter((item)=>{
+                              return item.title_presta.includes(searchPresta)
+                            }).filter((item)=>{
+                              return item.category.includes(searchCategory)
+                            }).map((item,index)=>{
+                              const id = item._id
                           return(
-                            <div className="col-lg-12">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
+                            
+                              <div key={index} className="row row-presta">
+                                <Link to={`/prestation/${id}`}>
+                                  <div className="row">
+                                    <div className="col-lg-5">
+                                  <div className="first-part-presta">
+                                    <p className="title-presta-card">{item.title_presta}</p>
+                                  </div>
+                                </div>
+                                <div className="col-lg-4">
+                                <p className="price-presta-card">{item.category}</p>
+                                  </div>
+                                  <div className="col-lg-2">
+                                  <div className="crud-bloc">
                                   <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
                                   <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
+                                  <Link className="link-crud-presta-card" to="#"><BsEye/></Link>
                                 </div>
+                                  </div>
+                                  <div className="col-lg-1">
+                                   <p className="price-presta-card">{item.price_presta}€</p>
+                                  </div>
+                                     </div>
+                                  </Link>
+                              
+                               
+                         
+                             
+                                  
                               </div>
-                            </div>
-                          )
-                        })
-                      }
+                                  )
+                                })
+                              }
+                        </div>
                     </div>
                   </div>
                 </div>
               </div>
-              {/* REPARATIONS*/}
-              <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Réparations</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "réparations")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
               </div>
-              {/*DIVERS*/}
-              <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Divers</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "divers")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* PROTHESE FIXE*/}
-              <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Prothèse fixe</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "prothèse fixe")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-                {/* CERAMIQUE */}
-                <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Céramique</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "céramique")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-                {/* ZIRCONE */}
-                <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Zircone</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "zircone")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-                {/* Céramique pure */}
-                <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Céramique pure</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "céramique pure")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-                {/* Implants */}
-                <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Implants</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "implants")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-                {/* Soudure */}
-                 <div className="row table-presta">
-                <div className="col-lg-12">
-                  <h4>Soudure</h4>
-                  <div className="line-presta"></div>
-                  <div className="presta-bloc">
-                    <div className="row">
-                    {dataPresta.filter((item)=>item.category === "soudures")
-                        .map((item,index)=>{
-                          return(
-                            <div className="col-lg-2">
-                              <div key={index} className="presta-card-bloc">
-                              <Link className="link-presta-card" to="#">
-                                <p className="title-presta-card">{item.title_presta}</p>
-                                <p className="price-presta-card">{item.price_presta}€</p>
-                              </Link>
-                                <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
           </div>
           }
         </div>

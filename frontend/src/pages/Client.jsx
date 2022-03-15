@@ -101,6 +101,7 @@ const DeleteData = (e) =>{ // delete la data ciblé , ferme la popUp delete et r
             <div>
             <div className="header-page">
                 <h3 className="header-title">Clients</h3>
+                
                 <button onClick={DesactivePopUp}> <GiTireIronCross/> Fermer formulaire </button>
               </div>
               <div className="form-content-new">

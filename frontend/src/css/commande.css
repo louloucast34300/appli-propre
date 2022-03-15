@@ -16,12 +16,32 @@
     margin-right: -20px;
 }
 #presta{
-    margin-top:10px;
+   height:60px;
+   background-color:rgba(58, 62, 74,1) ;
+   color:white;
+   border:none;
+   border-bottom:1px solid rgba(184, 50, 162,1);
+   border-radius: 0px;
+   width:70%;
+   font-size:20px;
+}
+
+#doctor{
+    background-color: transparent;
+    border:none;
+    border-bottom: 1px solid rgba(184, 50, 162,1);
+    border-radius: 0px;
+    color:white;
+    font-size:20px;
+}
+.col-margin{
+    margin-top:16px;
 }
 .input-pesta-part{
     display:flex;
     flex-direction:row;
     justify-content: space-between;
+    margin-top: 50px;
 }
 .label-input{
     color:white;
@@ -36,19 +56,85 @@
     font-size:10px;
 }
 
-
+.patient-input{
+    background-color: transparent;
+    border:none;
+    border-bottom:1px solid rgba(184, 50, 162,1);
+    width:400px;
+    color:white;
+}
+.label-patient{
+    color:white;
+}
+.form-margin{
+    margin-top:100px;
+}
 .teeth-part{
-    margin-top:30px;
+    margin:0 auto;
+    margin-top:50px;
+    width:700px;
 }
 .teeth{
     height:100px;
     margin:0px 10px;
     padding-top:50px;
 }
-.bgt1{
-    background-image: url('../image/dents/dent16.svg');
-    background-repeat: no-repeat;
+.teeth-part.teeth-bottom{
+    margin-top:0px;
+
 }
+.teeth-part.teeth-bottom .teeth{
+    height:100px;
+    padding-top:0px;
+
+}
+.teeth-space{
+    margin-right:40px;
+}
+
+.bgt1,.bgt2,.bgt3,.bgt4,.bgt5,.bgt6,.bgt7,.bgt8,.bgt9,.bgt10,.bgt11,.bgt12,.bgt13,.bgt14,.bgt15,.bgt16,.bgt17,.bgt18,.bgt19,.bgt20,.bgt21,.bgt22,.bgt23,.bgt24,.bgt25,.bgt26,.bgt27,.bgt28,.bgt29,.bgt30,.bgt31,.bgt32{
+    background-repeat: no-repeat;
+    background-size: 13px;
+}
+.bgt17,.bgt18,.bgt19,.bgt20,.bgt21,.bgt22,.bgt23,.bgt24,.bgt25,.bgt26,.bgt27,.bgt28,.bgt29,.bgt30,.bgt31,.bgt32{
+    background-position-y: 24px;
+}
+.bgt1{background-image: url('../image/dents/dent1.svg');background-position-y: 23px;}
+.bgt2{background-image: url('../image/dents/dent2.svg');background-position-y: 19px;}
+.bgt3{background-image: url('../image/dents/dent3.svg');background-position-y: 17px;}
+.bgt4{background-image: url('../image/dents/dent4.svg');background-position-y: 10px;}
+.bgt5{background-image: url('../image/dents/dent5.svg');background-position-y: 11px;}
+.bgt6{background-image: url('../image/dents/dent6.svg');}
+.bgt7{background-image: url('../image/dents/dent7.svg');background-position-y: 8px;}
+.bgt8{background-image: url('../image/dents/dent8.svg');background-position-y: 12px;}
+
+.bgt9{background-image: url('../image/dents/dent9.svg');background-position-y: 12px;}
+.bgt10{background-image: url('../image/dents/dent10.svg');background-position-y: 10px;}
+.bgt11{background-image: url('../image/dents/dent11.svg');background-position-y: 0px;}
+.bgt12{background-image: url('../image/dents/dent12.svg');background-position-y: 12px;}
+.bgt13{background-image: url('../image/dents/dent13.svg');background-position-y: 11px;}
+.bgt14{background-image: url('../image/dents/dent14.svg');background-position-y: 18px;}
+.bgt15{background-image: url('../image/dents/dent15.svg');background-position-y: 19px;}
+.bgt16{background-image: url('../image/dents/dent16.svg');background-position-y: 23px;}
+
+.bgt17{background-image: url('../image/dents/dent17.svg');}
+.bgt18{background-image: url('../image/dents/dent18.svg');}
+.bgt19{background-image: url('../image/dents/dent19.svg');}
+.bgt20{background-image: url('../image/dents/dent20.svg');}
+.bgt21{background-image: url('../image/dents/dent21.svg');}
+.bgt22{background-image: url('../image/dents/dent22.svg');}
+.bgt23{background-image: url('../image/dents/dent23.svg');}
+.bgt24{background-image: url('../image/dents/dent24.svg');}
+
+.bgt25{background-image: url('../image/dents/dent25.svg');}
+.bgt26{background-image: url('../image/dents/dent26.svg');}
+.bgt27{background-image: url('../image/dents/dent27.svg');}
+.bgt28{background-image: url('../image/dents/dent28.svg');}
+.bgt29{background-image: url('../image/dents/dent29.svg');}
+.bgt30{background-image: url('../image/dents/dent30.svg');}
+.bgt31{background-image: url('../image/dents/dent31.svg');}
+.bgt32{background-image: url('../image/dents/dent32.svg');}
+
 input[type="checkbox"] {
     display: none;
 }
@@ -72,7 +158,7 @@ input[type="checkbox"] {
     margin:20px 10px;
     border: 2px dotted rgba(58, 62, 74,1);
 }
-.add-presta button{
+.add-presta button, .send-btn-commande{
     background-color: #B832A2;
     border:none;
     border-radius:5px;
@@ -81,7 +167,16 @@ input[type="checkbox"] {
     padding:10px 20px;
     transition: all .2s ease-in-out;
 }
-.add-presta button:hover{
+.add-presta button:hover, .send-btn-commande:hover{
     transform: scale(1.1);
     transition: all .2s ease-in-out;
+}
+.send-btn-commande{
+    background-color: rgba(58, 62, 74,1) !important;
+    margin-left:10px;
+}
+.first-row-commande{
+    background-color: rgba(58, 62, 74,1);
+    padding:20px;
+    border-radius: 10px;
 }

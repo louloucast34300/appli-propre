@@ -1,9 +1,23 @@
-
+const {
+    createOrder,
+    listOrder
+} = require('../query/orders.query')
 exports.orderCreate = async (req, res, next) => {
-    const body = req.body
+    const body = req.body;
+    const array_price =[]
+    
+
+        await body.flux_de_prod.forEach((prod)=>{
+                const push_array = array_price.push(prod.price_presta)
+            })
+            let calcul_price = 0;
+            for (let i = 0; i < array_price.length; i++){
+                calcul_price += array_price[i];
+            }
+            const total_price = calcul_price
     try{
-        console.log(body)
-        res.end();
+        const order = await createOrder(body, total_price)
+        res.redirect(`/order?message=${encodeURIComponent('Nouveau bon de livraison enregistré.')}`);
     }catch(e){
         next(e);
     }
@@ -11,7 +25,8 @@ exports.orderCreate = async (req, res, next) => {
 
 exports.orderList = async (req, res, next) => {
     try{
-        res.send('orderList OK');
+       const order = await listOrder();
+       res.send(order);
     }catch(e){
         next(e);
     }
