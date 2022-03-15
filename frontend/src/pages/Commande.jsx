@@ -66,8 +66,7 @@ const getFlux = () =>{
         setFluxList(response)
     })
 }
-function handleSubmit(e){
-    e.preventDefault();
+function handleSubmit(){
     axios.post('/api/order/new-order',{
         flux_de_prod:flux,
         doctor:doctorName,
