@@ -1,10 +1,14 @@
 import React, {useState,useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 
 import '../css/commande.css'
 import {AiOutlinePlus} from 'react-icons/ai'
 import {GiTireIronCross} from 'react-icons/gi'
+import {FiEdit} from 'react-icons/fi'
+import {BsEye} from 'react-icons/bs'
+
 
 const Commande = () => {
 
@@ -66,14 +70,15 @@ const getFlux = () =>{
         setFluxList(response)
     })
 }
-function handleSubmit(e){
+async function handleSubmit(e){
     e.preventDefault();
-    axios.post('/api/order/new-order',{
+   await axios.post('/api/order/new-order',{
         flux_de_prod:flux,
         doctor:doctorName,
         patient:patient,
         date:date,
     });
+    window.location.reload();
 }
 const handleCurrentDoctor = (e) =>{
     e.preventDefault()
@@ -335,16 +340,53 @@ const handlePatientName = (e) =>{
 </form>
        </div>
        :
-       <div className="header-page">
+       <div>
+             <div className="header-page">
                     <h3 className="header-title">Flux de production</h3>
                     <div>
                         <h3 className={messageSuccess===""?"message-success":"message-success active"}>{messageSuccess}</h3>
                     </div>
                     <button onClick={activePopUp}> <AiOutlinePlus/> Ajouter un bon de livraison</button>
                 </div>
-       }
 
-      
+                <div className="container-fluid">
+                        {fluxList.map((item,index)=>{
+                            return(
+                                   <Link key={index} to="#">
+                                    <div className="row">
+                                        <div className="col-lg-2">
+                                            <p>Bon de livraison</p>
+                                            <p>{item.number_order}</p>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p>Docteur</p>
+                                            <p>{item.doctor[0].lastname}</p>
+                                            <p>{item.patient}</p>
+                                            
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p>Date de livraison</p>
+                                            <p>{item.date_of_creation}</p>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p>Contenu</p>
+                                            <p>{item.flux[0].presta}</p>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p>options</p>
+                                       <Link to='#'><FiEdit/></Link> <a id={client._id}><GiTireIronCross/></a> <Link to='#'><BsEye/></Link>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p>Prix</p>
+                                            <p>{item.price}€</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        })}
+                    </div>
+                </div>
+                }
       </>
 
   )

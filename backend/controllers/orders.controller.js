@@ -17,7 +17,8 @@ exports.orderCreate = async (req, res, next) => {
             const total_price = calcul_price
     try{
         const order = await createOrder(body, total_price)
-        res.redirect(`/order?message=${encodeURIComponent('Nouveau bon de livraison enregistré.')}`);
+      //  res.redirect(`/order?message=${encodeURIComponent('Nouveau bon de livraison enregistré.')}`);
+      res.end();
     }catch(e){
         next(e);
     }

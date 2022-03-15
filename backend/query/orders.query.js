@@ -14,5 +14,5 @@ exports.createOrder = (body, total_price) =>{
 };
 
 exports.listOrder = () =>{
-    return Order.find().exec();
+   return Order.find().exec()
 }
