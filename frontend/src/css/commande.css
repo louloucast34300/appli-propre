@@ -60,7 +60,7 @@
     background-color: transparent;
     border:none;
     border-bottom:1px solid rgba(184, 50, 162,1);
-    width:400px;
+
     color:white;
 }
 .label-patient{
@@ -179,4 +179,88 @@ input[type="checkbox"] {
     background-color: rgba(58, 62, 74,1);
     padding:20px;
     border-radius: 10px;
+}
+.calcul-total-flux{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color:#F2FAFF;
+    color:rgba(58, 62, 74,1);
+    width:300px;
+    border-radius:5px;
+    box-shadow: 0px 3px 15px -4px rgba(0,0,0,0.7);
+}
+
+.calcul-total-flux p{
+    color:rgba(58, 62, 74,1);
+    margin-top:13px;
+    font-size:10px;
+}
+
+.calcul-total-flux p span{
+    font-size: 20px;
+    color:#B832A2;
+}
+.commande-list{
+    margin-top:100px;
+}
+.commande-list a{
+    text-decoration:none;
+}
+.row-commande-list{
+    background-color: #F2FAFF;
+    padding:10px;
+    border-bottom:0.5px solid grey
+}
+.row-commande-list .little{
+    font-size:12px;
+}
+.row-commande-list .medium{
+    font-size:14px;
+}
+.color-commande-1{
+    color:rgba(96, 186, 237,1);
+}
+.color-commande-2{
+    color:rgba(58, 62, 74,1);
+}
+.color-commande-3{
+    color:rgba(77, 77, 77, 0.575);
+}
+.line-height-commande{
+    line-height:0px;
+}
+.icon-commande{
+    margin-top:-5px;
+}
+.margin-neg{
+    margin-bottom:3px;
+}
+.row-commande-list:hover{
+    background-color: rgba(58, 62, 74,0.05);
+}
+.row-commande-list:hover .color-commande-3{
+    color:#B832A2;
+}
+.row-search-bar{
+    background-color: rgba(58, 62, 74,1);
+    padding:10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.div-search-bar{
+    display:flex;
+    flex-direction:column;
+}
+.div-search-bar input{
+    background-color:transparent;
+    border:none;
+    border-bottom:1px solid #B832A2;
+}
+.div-search-bar label{
+    color:white;
+}
+.mt-neg{
+    margin-top:-10px;
 }

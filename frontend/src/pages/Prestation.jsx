@@ -165,43 +165,47 @@ const handle_Search_Price = (e) =>{
                           </div>
                         </div>
                             <div className="col-lg-12">
-                            {dataPresta.filter((item)=>{
+                           
+                                    {dataPresta.filter((item)=>{
                               return item.title_presta.includes(searchPresta)
                             }).filter((item)=>{
                               return item.category.includes(searchCategory)
                             }).map((item,index)=>{
                               const id = item._id
                           return(
-                            
-                              <div key={index} className="row row-presta">
-                                <Link to={`/prestation/${id}`}>
-                                  <div className="row">
-                                    <div className="col-lg-5">
-                                  <div className="first-part-presta">
-                                    <p className="title-presta-card">{item.title_presta}</p>
-                                  </div>
-                                </div>
-                                <div className="col-lg-4">
-                                <p className="price-presta-card">{item.category}</p>
-                                  </div>
-                                  <div className="col-lg-2">
-                                  <div className="crud-bloc">
-                                  <Link className="link-crud-presta-card" to={`/prestation/edit/${item._id}`}><FiEdit/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><GiTireIronCross/></Link>
-                                  <Link className="link-crud-presta-card" to="#"><BsEye/></Link>
-                                </div>
-                                  </div>
-                                  <div className="col-lg-1">
-                                   <p className="price-presta-card">{item.price_presta}€</p>
-                                  </div>
-                                     </div>
+                            <Link to={`/prestation/${id}`}>
+                              <div key={index} className="row row-commande-list">
+                             
+                                <div className="col-lg-3">
+                                            <p className="color-commande-1 little">Prestation</p>
+                                            <p className="mt-neg">{item.title_presta}</p>
+                                        </div>
+                                        <div className="col-lg-3">
+                                            <p className="color-commande-1 little">Category</p>
+                                            <p className="color-commande-2 medium line-height-commande">{item.category}</p>
+                               
+                                        </div>
+                                   
+                                        <div className="col-lg-2">
+                                            <p className="color-commande-3 little ">Contenu</p>
+                                            <p className="line-height-commande little">{item.info_supp}</p>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p className="color-commande-3 little margin-neg">options</p>
+                                       <Link to={`/prestation/edit/${item._id}`}><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to='#'><BsEye/></Link>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p className="color-commande-3 little">Prix</p>
+                                            <p className="line-height-commande medium">{item.price_presta}€</p>
+                                        </div>
+                                        </div>
                                   </Link>
                               
                                
                          
                              
                                   
-                              </div>
+                        
                                   )
                                 })
                               }

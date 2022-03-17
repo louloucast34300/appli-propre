@@ -12,6 +12,7 @@ import {BsEye} from 'react-icons/bs'
 
 const Commande = () => {
 
+const [calculTotalFlux,setCalculTotalFlux] = useState(0);
 const [popUpForm, setPopUpForm] = useState(false);
 const [messageSuccess, setMessageSuccess] = useState('')
 const [presta, setPresta] = useState([])
@@ -24,14 +25,17 @@ const [flux, setFlux] = useState([
     {  presta:'',teintier:'', teinte:'', nbr_teeth:[], price_presta:'', remise_presta:''}
 ]);
 
-console.log(fluxList);
+const [livraisonSearch, setLivraisonSearch] = useState('');
+const [doctorSearch, setDoctorSearch] = useState('');
+const [patientSearch, setPatientSearch] = useState('');
+const [dateSearch, setDateSearch] = useState('');
+
 useEffect(()=>{
     getFlux();
     getClient();
     getPresta();
     date_of_day();
 },[]);
-
 
 
 const date_of_day = () =>{
@@ -67,8 +71,16 @@ const getClient = ()=>{
 const getFlux = () =>{
     axios.get('/api/order').then((res)=>{
         const response  = res.data;
+        calcul_total_price_flux(response)
         setFluxList(response)
     })
+}
+function calcul_total_price_flux  (response) {
+    let value = 0; 
+    for(let i = 0; i < response.length; i++){
+         value += response[i].price;
+    }
+    setCalculTotalFlux(value)
 }
 async function handleSubmit(e){
     e.preventDefault();
@@ -150,7 +162,22 @@ const handlePatientName = (e) =>{
     const value = e.target.value;
     setPatient(value)
 }
-
+const handle_Livraison_Search = (e) =>{
+    const value = e.target.value;
+    setLivraisonSearch(value) 
+}
+const handle_doctor_Search = (e) =>{
+    const value = e.target.value;
+    setDoctorSearch(value) 
+}
+const handle_patient_Search = (e) =>{
+    const value = e.target.value;
+    setPatientSearch(value) 
+}
+const handle_date_Search = (e) =>{
+    const value = e.target.value;
+    setDateSearch(value) 
+}
   return (
       <>   
        {popUpForm?
@@ -160,7 +187,6 @@ const handlePatientName = (e) =>{
                 <button onClick={DesactivePopUp}> <GiTireIronCross/> Fermer formulaire </button>
               </div>
               <form className="form-margin" onSubmit={handleSubmit}>
-
 {/*DOCTEUR*/}
 <div className="container-fluid">
     <div className="row first-row-commande">
@@ -346,39 +372,69 @@ const handlePatientName = (e) =>{
                     <div>
                         <h3 className={messageSuccess===""?"message-success":"message-success active"}>{messageSuccess}</h3>
                     </div>
-                    <button onClick={activePopUp}> <AiOutlinePlus/> Ajouter un bon de livraison</button>
+                    <div className="calcul-total-flux">
+                        <p>Nombre de résultat :&nbsp; <span>{fluxList.length}</span> </p>
+                        <p>Valeur totale :&nbsp;<span>{calculTotalFlux}€</span></p>
+                    </div>
+                     <button onClick={activePopUp}> <AiOutlinePlus/> Ajouter un bon de livraison</button>
                 </div>
 
-                <div className="container-fluid">
-                        {fluxList.map((item,index)=>{
+                <div className="container-fluid commande-list">
+                    <div className="row row-search-bar">
+                        <div className="col-lg-3 div-search-bar">
+                            <label htmlFor="n_livraison">N° de livraison :</label>
+                            <input type="text" id="n_livraison" onChange={handle_Livraison_Search} />
+                        </div>
+                        <div className="col-lg-3 div-search-bar">
+                            <label htmlFor="n_docteur">Docteur :</label>
+                            <input type="text" id="n_docteur" onChange={handle_doctor_Search}/>
+                        </div>
+                        <div className="col-lg-3 div-search-bar">
+                            <label htmlFor="n_patient">Patient :</label>
+                            <input type="text" id="n_patient" onChange={handle_patient_Search}/>
+                        </div>
+                        <div className="col-lg-3 div-search-bar">
+                            <label htmlFor="n_date">Date du bon :</label>
+                            <input type="text" id="n_date" onChange={handle_date_Search}/>
+                        </div>
+                    </div>
+                        {fluxList.filter((a) => {
+                            return a.doctor[0].lastname.includes(doctorSearch)
+                        }).filter((a)=>{
+                            return a.patient.includes(patientSearch)
+                        }).filter((a)=>{
+                            return a.date_of_creation.includes(dateSearch)
+                        }).filter((a)=>{
+                            return a.number_order.toString().includes(livraisonSearch)
+                        })
+                        .map((item,index)=>{
                             return(
-                                   <Link key={index} to="#">
-                                    <div className="row">
+                                   <Link className="presta-link"key={index} to="#">
+                                    <div className="row row-commande-list">
                                         <div className="col-lg-2">
-                                            <p>Bon de livraison</p>
-                                            <p>{item.number_order}</p>
+                                            <p className="color-commande-1 little">Bon de livraison</p>
+                                            <p className="line-height-commande">N°{item.number_order}</p>
                                         </div>
                                         <div className="col-lg-2">
-                                            <p>Docteur</p>
-                                            <p>{item.doctor[0].lastname}</p>
-                                            <p>{item.patient}</p>
-                                            
+                                            <p className="color-commande-1 little">Docteur</p>
+                                            <p className="color-commande-2 medium line-height-commande">{item.doctor[0].lastname}</p>
+                                            <p className='color-commande-3 little line-height-commande'>{item.patient}</p>
                                         </div>
                                         <div className="col-lg-2">
-                                            <p>Date de livraison</p>
-                                            <p>{item.date_of_creation}</p>
+                                            <p className="color-commande-3 little">Date de livraison</p>
+                                            <p className="line-height-commande little">{item.date_of_creation}</p>
                                         </div>
                                         <div className="col-lg-2">
-                                            <p>Contenu</p>
-                                            <p>{item.flux[0].presta}</p>
+                                            <p className="color-commande-3 little ">Contenu</p>
+                                            <p className="line-height-commande little">{item.flux[0].presta}</p>
                                         </div>
                                         <div className="col-lg-2">
-                                            <p>options</p>
-                                       <Link to='#'><FiEdit/></Link> <a id={client._id}><GiTireIronCross/></a> <Link to='#'><BsEye/></Link>
+                                            <p className="color-commande-3 little margin-neg">options</p>
+                                       <Link to='#'><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to='#'><BsEye/></Link>
                                         </div>
                                         <div className="col-lg-2">
-                                            <p>Prix</p>
-                                            <p>{item.price}€</p>
+                                            <p className="color-commande-3 little">Prix</p>
+                                            <p className="line-height-commande medium">{item.price}€</p>
                                         </div>
                                     </div>
                                 </Link>

@@ -55,12 +55,6 @@ const GetData = () =>{
                     <div className="left-bloc-cd">
                         <h3>{clientData.lastname} {clientData.username}</h3>
                         <p className="text-color-client-detail mt-30"><span>N°siret : </span> {clientData.n_siret}</p>
-                        <div className="bloc-tag">
-                        <p className="text-color-client-detail mt-10"><span>Tag : </span></p>
-                        <p className="mt-10 vip-tag tag"><span>VIP Client</span></p>
-                        <p className="mt-10 call-tag tag"><span>Call request</span></p>
-                        <p className="mt-10 email-tag tag"><span>Email not found</span></p>
-                        </div>
                         <p className="text-color-client-detail mt-30"><span>Email : </span> {clientData.email}</p>
                         <p className="text-color-client-detail mt-30"><span>Numéro tel 1 : </span> {clientData.phone}</p>
                         <p className="text-color-client-detail mt-30"><span>Numéro tel 2 : </span> non fournie</p>
