@@ -60,7 +60,6 @@
     background-color: transparent;
     border:none;
     border-bottom:1px solid rgba(184, 50, 162,1);
-
     color:white;
 }
 .label-patient{
@@ -158,19 +157,7 @@ input[type="checkbox"] {
     margin:20px 10px;
     border: 2px dotted rgba(58, 62, 74,1);
 }
-.add-presta button, .send-btn-commande{
-    background-color: #B832A2;
-    border:none;
-    border-radius:5px;
-    color:white;
-    font-size:14px;
-    padding:10px 20px;
-    transition: all .2s ease-in-out;
-}
-.add-presta button:hover, .send-btn-commande:hover{
-    transform: scale(1.1);
-    transition: all .2s ease-in-out;
-}
+
 .send-btn-commande{
     background-color: rgba(58, 62, 74,1) !important;
     margin-left:10px;
@@ -202,47 +189,15 @@ input[type="checkbox"] {
     font-size: 20px;
     color:#B832A2;
 }
-.commande-list{
-    margin-top:100px;
-}
-.commande-list a{
-    text-decoration:none;
-}
-.row-commande-list{
-    background-color: #F2FAFF;
-    padding:10px;
-    border-bottom:0.5px solid grey
-}
-.row-commande-list .little{
-    font-size:12px;
-}
-.row-commande-list .medium{
-    font-size:14px;
-}
-.color-commande-1{
-    color:rgba(96, 186, 237,1);
-}
-.color-commande-2{
-    color:rgba(58, 62, 74,1);
-}
-.color-commande-3{
-    color:rgba(77, 77, 77, 0.575);
-}
-.line-height-commande{
-    line-height:0px;
-}
+
+
 .icon-commande{
     margin-top:-5px;
 }
 .margin-neg{
     margin-bottom:3px;
 }
-.row-commande-list:hover{
-    background-color: rgba(58, 62, 74,0.05);
-}
-.row-commande-list:hover .color-commande-3{
-    color:#B832A2;
-}
+
 .row-search-bar{
     background-color: rgba(58, 62, 74,1);
     padding:10px;
@@ -253,11 +208,7 @@ input[type="checkbox"] {
     display:flex;
     flex-direction:column;
 }
-.div-search-bar input{
-    background-color:transparent;
-    border:none;
-    border-bottom:1px solid #B832A2;
-}
+
 .div-search-bar label{
     color:white;
 }

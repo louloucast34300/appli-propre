@@ -3,10 +3,15 @@ import {useParams, Link} from 'react-router-dom';
 import axios from 'axios';
 
 //css
+import '../css/propre.css'
 import '../css/clientDetail.css';
+
 import {MdOutlineMessage} from 'react-icons/md';
 import {AiOutlinePhone} from 'react-icons/ai';
 import {FiEdit} from 'react-icons/fi';
+import {GiTireIronCross} from 'react-icons/gi'
+import {BsEye} from 'react-icons/bs'
+import {IoIosArrowBack} from 'react-icons/io';
 
 const ClientDetail = () => {
 const nf = "non fournie"
@@ -19,11 +24,12 @@ const [clientData, setClientData] = useState([{
     n_siret:nf,
     address:nf,
 }]);
-
-console.log(clientData);
+const [clientCommande,setCLientCommande] = useState([])
+console.log(clientCommande);
 
 useEffect(()=>{
     GetData();
+    GetCommande();
 },[])
 
 const GetData = () =>{
@@ -34,7 +40,12 @@ const GetData = () =>{
         console.log("Erreur", err);
     })
 }
-
+const GetCommande = () =>{
+  axios.get(`/api/clients/commande-client/${client}`).then((res)=>{
+    const response = res.data;
+    setCLientCommande(response)
+  })
+}
 
 
 
@@ -45,8 +56,10 @@ const GetData = () =>{
                 <div className="header-client-detail">
                     <h3>Fiche Client</h3>
                     <div>
-                        <button className="btn-client-detail"><MdOutlineMessage/> Envoyer un message</button>
-                        <button className="btn-client-detail"><AiOutlinePhone/> Appeler le client</button>
+                     
+                        <button className="btn-style-1"> <Link className="link-version-btn"to="/client"><IoIosArrowBack/> Retour</Link></button>
+                        <button className="btn-style-1"><MdOutlineMessage/> Envoyer un message</button>
+                        <button className="btn-style-1"><AiOutlinePhone/> Appeler le client</button>
                     </div>
                 </div>
             </div>
@@ -73,22 +86,52 @@ const GetData = () =>{
     <div class="col-lg-12">
       <ul class="nav nav-tab-pan-client-detail">
         <li class="nav-item">
-          <a class="nav-link link-secondary" id="commandes-tab" data-bs-toggle="tab" data-bs-target="#commande" href="#">Commandes</a>
+          <a class="nav-link link-secondary active" id="commandes-tab" data-bs-toggle="tab" data-bs-target="#commande" href="#">Flux de production</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link link-secondary" id="attente-tab" data-bs-toggle="tab" data-bs-target="#attente" href="#">En attente</a>
+          <a class="nav-link link-secondary " id="attente-tab" data-bs-toggle="tab" data-bs-target="#attente" href="#">En attente</a>
         </li>
         <li class="nav-item">
           <a class="nav-link link-secondary" id="patient-tab" data-bs-toggle="tab" data-bs-target="#patient" href="#">Patients</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link link-secondary active" id="facture-tab" data-bs-toggle="tab" data-bs-target="#facture" href="#">Factures</a>
+          <a class="nav-link link-secondary  " id="facture-tab" data-bs-toggle="tab" data-bs-target="#facture" href="#">Factures</a>
         </li>
       </ul>
 
       <div class="tab-content" id="tabContent">
-        <div class="tab-pane fade" id="commande" role="tabpanel" aria-labelledby="commandes-tab">
-          <p>liste des commandes</p>
+        <div class="tab-pane fade show active" id="commande" role="tabpanel" aria-labelledby="commandes-tab">
+          <div className="container-fluid">
+            {clientCommande.map((item,index)=>{
+            return(
+              <Link className="presta-link"key={index} to="#">
+                                    <div className="row row-list">
+                                        <div className="col-lg-2">
+                                            <p className="color-3 f-little">Bon de livraison</p>
+                                            <p className="line-0">N°{item.number_order}</p>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p className="color-5 f-little">Date de livraison</p>
+                                            <p className="line-0 f-little">{item.date_of_creation}</p>
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <p className="color-5 f-little ">Contenu</p>
+                                            <p className="line-0 f-little">{item.flux[0].presta}</p>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p className="color-5 f-little margin-neg">options</p>
+                                       <Link to='#'><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to='#'><BsEye/></Link>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <p className="color-5 f-little">Prix</p>
+                                            <p className="line-0 f-medium">{item.price}€</p>
+                                        </div>
+                                    </div>
+                                </Link>
+            )
+          })}
+          </div>
+          
         </div>
         <div class="tab-pane fade" id="attente" role="tabpanel" aria-labelledby="attente-tab">
           <p>liste des factures non classée</p>
@@ -96,7 +139,7 @@ const GetData = () =>{
         <div class="tab-pane fade" id="patient" role="tabpanel" aria-labelledby="patient-tab">
           <p>Listes des patients</p>
         </div>
-        <div class="tab-pane fade show active" id="facture" role="tabpanel" aria-labelledby="patient-tab">
+        <div class="tab-pane fade " id="facture" role="tabpanel" aria-labelledby="patient-tab">
           <p>Listes des factures</p>
         </div>
       </div>

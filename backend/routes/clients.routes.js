@@ -7,7 +7,8 @@ const {
     doctorEdit,
     doctorUpdate,
     doctorDelete,
-    doctorDetail
+    doctorDetail,
+    commandeByDoctor
 }= require('../controllers/clients.controller')
 
 // link vers ici : /api/clients/...
@@ -20,5 +21,7 @@ router.post('/update-doctor/:doctorID', doctorUpdate);
 router.get('/detail/:doctorID', doctorDetail);
 router.delete('/delete/:doctorID',doctorDelete);
 
+// fiche clientDetail (commandes, en attente, patients, Factures);
+router.get('/commande-client/:doctorID', commandeByDoctor)
 
 module.exports = router;

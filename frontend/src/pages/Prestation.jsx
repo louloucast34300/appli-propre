@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useLocation, Link} from 'react-router-dom';
 import axios from 'axios';
 
-import '../css/prestation.css'
+import '../css/propre.css';
+import '../css/prestation.css';
 import {AiOutlinePlus} from 'react-icons/ai';
 import {VscDash} from 'react-icons/vsc';
 import {FiEdit} from 'react-icons/fi';
@@ -116,8 +117,8 @@ const handle_Search_Price = (e) =>{
                     <input type="text" id="survey_options[]" className="form-control" name="product_used" placeholder="Produit utilisé"/>
                 </div>
                 <div className="controls">
-                  <a className="btn-add-input" href="#" id="add_more_fields" onClick={addFields}> <AiOutlinePlus/> Ajouter un produit</a>
-                  <a className="btn-remove-input" href="#" id="removefields" onClick={removeFields}><VscDash/> Enlever un produit</a>
+                  <a className="btn-style-2" href="#" id="add_more_fields" onClick={addFields}> <AiOutlinePlus/> Ajouter un produit</a>
+                  <a className="btn-style-3" href="#" id="removefields" onClick={removeFields}><VscDash/> Enlever un produit</a>
                 </div>
                 </div>
                 <div className="col">
@@ -129,7 +130,7 @@ const handle_Search_Price = (e) =>{
                 <div className="form-outline mb-4">
                     <textarea className="form-control" id="info_supp"  name="info_supp" rows="4" placeholder="Informations complémentaires"></textarea>
                 </div>
-                    <button type="submit" className="btn-form">Enregistrer la prestation.</button>
+                    <button type="submit" className="btn-style-2">Enregistrer la prestation.</button>
             </form>
             </div>
           </div>
@@ -140,30 +141,28 @@ const handle_Search_Price = (e) =>{
               <div>
                 <h3 className={messageSuccess===""?"message-success":"message-success active"}>{messageSuccess}</h3>
               </div>
-              <button onClick={activePopUp}> <AiOutlinePlus/>Ajouter une prestation</button>
+              <button className="btn-style-1" onClick={activePopUp}> <AiOutlinePlus/>Ajouter une prestation</button>
             </div>
               <div className="container">
                 <div className="row table-presta">
                 <div className="col-lg-12">
                   <div className="presta-bloc">
-                    <div className="row">
-                        <div className="search-bloc-presta">
-                        <div className="bloc-search">
-                           <p className="title-bloc-search">Rechercher une prestation </p>
+                    <div className="row radius-top bg-1 p-10">
+                      
+                          <div className="col-lg-4 d-col-flex">
+                            <label className="label-style-1" htmlFor="presta-search">Prestation :</label>
+                            <input className="input-style-1" type="text" id="presta-search" onChange={handle_Search_Presta}/>
                           </div>
-                          <div className="bloc-search">
-                            <label htmlFor="presta-search">Prestation :</label>
-                            <input type="text" id="presta-search" onChange={handle_Search_Presta}/>
+                          <div className="col-lg-4 d-col-flex">
+                            <label className="label-style-1" htmlFor="category-search">Categorie :</label>
+                            <input className="input-style-1" type="text" id="category-search" onChange={handle_Search_Category}/>
                           </div>
-                          <div className="bloc-search">
-                            <label htmlFor="category-search">Categorie :</label>
-                            <input type="text" id="category-search" onChange={handle_Search_Category}/>
+                          <div className="col-lg-4 d-col-flex">
+                            <label className="label-style-1" htmlFor="price-search">Prix :</label>
+                            <input className="input-style-1" type="text" id="price-search" onChange={handle_Search_Price} />
                           </div>
-                          <div className="bloc-search">
-                            <label htmlFor="price-search">Prix :</label>
-                            <input type="text" id="price-search" onChange={handle_Search_Price} />
                           </div>
-                        </div>
+                            <div className="row">
                             <div className="col-lg-12">
                            
                                     {dataPresta.filter((item)=>{
@@ -174,49 +173,43 @@ const handle_Search_Price = (e) =>{
                               const id = item._id
                           return(
                             <Link to={`/prestation/${id}`}>
-                              <div key={index} className="row row-commande-list">
+                              <div key={index} className="row row-list">
                              
                                 <div className="col-lg-3">
-                                            <p className="color-commande-1 little">Prestation</p>
+                                            <p className="color-3 f-little">Prestation</p>
                                             <p className="mt-neg">{item.title_presta}</p>
                                         </div>
                                         <div className="col-lg-3">
-                                            <p className="color-commande-1 little">Category</p>
-                                            <p className="color-commande-2 medium line-height-commande">{item.category}</p>
+                                            <p className="color-3 f-little">Category</p>
+                                            <p className="color-1 f-medium line-0">{item.category}</p>
                                
                                         </div>
                                    
                                         <div className="col-lg-2">
-                                            <p className="color-commande-3 little ">Contenu</p>
-                                            <p className="line-height-commande little">{item.info_supp}</p>
+                                            <p className="color-5 f-little ">Contenu</p>
+                                            <p className="line-0 f-little">{item.info_supp}</p>
                                         </div>
                                         <div className="col-lg-2">
-                                            <p className="color-commande-3 little margin-neg">options</p>
+                                            <p className="color-5 f-little margin-neg">options</p>
                                        <Link to={`/prestation/edit/${item._id}`}><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to='#'><BsEye/></Link>
                                         </div>
                                         <div className="col-lg-2">
-                                            <p className="color-commande-3 little">Prix</p>
-                                            <p className="line-height-commande medium">{item.price_presta}€</p>
+                                            <p className="color-5 f-little">Prix</p>
+                                            <p className="line-0 f-medium">{item.price_presta}€</p>
                                         </div>
                                         </div>
                                   </Link>
-                              
-                               
-                         
-                             
-                                  
-                        
                                   )
                                 })
                               }
+                        </div>
                         </div>
                     </div>
                   </div>
                 </div>
               </div>
-              </div>
-              
-          </div>
+            </div>
+  
           }
         </div>
       </div>

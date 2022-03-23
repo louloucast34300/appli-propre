@@ -103,16 +103,9 @@
 .search-bloc-presta .bloc-search label{
     color:rgba(255, 255, 255, 0.575);
 }
-.search-bloc-presta .bloc-search input{
-    background-color: transparent;
-    color:white;
-    border:none;
-    border-bottom: 1px solid white;
-}
 
-.row-presta a{
-    text-decoration: none;
-}
+
+
 .row-presta:hover{
     background-color: rgba(58, 62, 74,0.1);
 }

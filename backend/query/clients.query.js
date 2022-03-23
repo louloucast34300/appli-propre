@@ -1,4 +1,5 @@
 const Client = require('../BDD/clients.model');
+const Order = require('../BDD/orders.model');
 
 exports.createDoctor = (body) =>{
     const newClient = new Client({
@@ -41,4 +42,11 @@ exports.updateDoctor = (clientId, body) =>{
 
 exports.detailDoctor = (clientId) =>{
     return Client.findById({_id : clientId}).exec();
+}
+
+
+//clientDetail (commande, en attente, patients, factures)
+
+exports.doctorCommande = (clientId) =>{
+    return Order.find({'doctor._id':clientId})
 }

@@ -1,8 +1,55 @@
-import React from 'react'
-import PieChart from '../charts/pieChart';
+import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
+import axios from 'axios';
 
 import '../css/dashboard.css';
+import {GiTimeDynamite, GiTireIronCross} from 'react-icons/gi'
+import {AiOutlineCheck} from 'react-icons/ai'
 const Dashboard = () => {
+
+  const [dataNote, setDataNote] = useState([])
+  const [form, setForm] = useState([{
+    title :'',
+    message:'',
+  }])
+console.log(dataNote);
+useEffect(()=>{
+  getData();
+},[])
+
+const submitNote =() =>{
+  axios.post('/api/notes/new-note/',{
+    title:form[0].title,
+    message:form[0].message
+  });
+}
+const getData = () =>{
+  axios.get('/api/notes/').then((res)=>{
+    const response = res.data;
+    setDataNote(response);
+  })
+}
+const handleTitle = (e) =>{
+  const values = [...form];
+  form[0].title = e.target.value;
+  setForm(values);
+}
+const handleMessage = (e) =>{
+  const values = [...form];
+  form[0].message = e.target.value;
+  setForm(values);
+}
+const handleCheck = async (e) =>{
+  const value = e.target.parentElement.id;
+  await axios.get(`api/notes/check-note/${value}`);
+  getData();
+}
+const handleDelete = async(e) =>{
+  const value = e.target.parentElement.id
+  console.log(value);
+  await axios.delete(`api/notes/delete-note/${value}`);
+  getData();
+}
   return (
     <div className="container-fluid">
       <div className="row">
@@ -46,21 +93,55 @@ const Dashboard = () => {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="note-form card-dashboard">
-                   
-                      <form action="">
+                      <form action="/api/notes/new-note/" method="POST">
                       <p className="title-bloc-dash" style={{textAlign:'center'}}>Prise de note</p>
                         <div className="note-bloc-form">
                           <label className="title-bloc-dash" htmlFor="title_note">Titre :</label>
-                          <input type="text" id="title_note"/>
+                          <input type="text" id="title_note" name="title" />
                         </div>
                         <div className="note-bloc-form">
                           <label  className="title-bloc-dash" htmlFor="title_note">Note :</label>
-                          <textarea name="" id="" cols="30" rows="5"></textarea>
+                          <textarea name="message" id="" cols="30" rows="5" ></textarea>
                         </div>
-                        <button className="btn-form-note">Enregistrer</button>
+                        <button type="submit" className="btn-form-note">Enregistrer</button>
                       </form>
                   </div>
                 </div>
+                  <div className="col-lg-12">
+                      <div className="note-content card-dashboard">
+                        <div className="overlfow">
+                            {dataNote.map((item,index)=>{
+                                return(
+                                    <div key={index} className="row p-2">
+                                  <div className="col-lg-6">
+                                    {item.check===false?<p className="title-note">{item.title_note}</p>:<p className="title-note-check">{item.title_note}<AiOutlineCheck/></p>}
+                                  </div>
+                                  <div className="col-lg-6">
+                                  {item.check===false?
+                                    <div className="icon-content-note-dash">
+                                     
+                                      <button className="btn-note"id={item._id} onClick={handleCheck}><AiOutlineCheck/></button>
+                                      <Link to="#"><GiTireIronCross/></Link>
+                                      <p className="date-note">{item.date}</p>
+                                      </div>
+                                      :
+                                      <div className="icon-content-note-dash">
+                                      <button className="btn-note"id={item._id} onClick={handleCheck}></button>
+                                      <button className="btn-note"id={item._id} onClick={handleDelete}><GiTireIronCross/></button>
+                       
+                                      <p className="date-note">{item.date}</p>
+                                    </div>
+                                    }
+                                  </div>
+                                  <div className="col-lg-12">
+                                    <p className="message-note">{item.message}</p>
+                                  </div>
+                                </div>
+                                )
+                              })}
+                        </div>
+                      </div>
+                  </div>
               </div>
             </div>
           </div>

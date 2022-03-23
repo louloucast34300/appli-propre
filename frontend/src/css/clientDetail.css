@@ -48,7 +48,6 @@
     flex-direction: row;
 }
 .tag{
-
     padding:0px 5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -56,6 +55,7 @@
     color:white;
     text-shadow: 1px 1px 4px rgb(136, 136, 136);
 }
+
 .vip-tag{background-color:rgb(255, 217, 0);}
 .email-tag{ background-color:#60BAED;}
 .call-tag{ background-color:rgb(87, 161, 57);}
@@ -96,4 +96,7 @@
     border-bottom:4px solid #60BAED;
     transition:all .3s ease-in-out;
     color:rgba(58, 62, 74,1);
+}
+.link-version-btn,.link-version-btn:hover {
+color:white;
 }

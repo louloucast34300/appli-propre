@@ -6,6 +6,7 @@ const {
     editDoctor,
     updateDoctor,
     detailDoctor,
+    doctorCommande,
 } = require('../query/clients.query');
 
 
@@ -70,3 +71,16 @@ exports.doctorDetail = async (req, res, next) =>{
         next(e);
     }
 };
+
+
+// clientDetail (commande, en attente, patients, factures)
+
+exports.commandeByDoctor = async (req, res, next) =>{
+    const clientId = req.params.doctorID;
+    try{
+        const client = await doctorCommande(clientId);
+        res.send(client);
+    }catch(e){
+        next(e);
+    }
+}
