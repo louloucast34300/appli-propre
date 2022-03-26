@@ -16,3 +16,8 @@ exports.createOrder = (body, total_price) =>{
 exports.listOrder = () =>{
    return Order.find().exec()
 }
+
+
+exports.detailOrder = (id) =>{
+   return Order.findById({_id : id}).exec();
+}

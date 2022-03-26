@@ -1,6 +1,7 @@
 const {
     createOrder,
-    listOrder
+    listOrder,
+    detailOrder
 } = require('../query/orders.query')
 exports.orderCreate = async (req, res, next) => {
     const body = req.body;
@@ -49,8 +50,11 @@ exports.orderUpdate= async (req, res, next) => {
     }
 }
 exports.orderDetail = async (req, res, next) => {
+    const id = req.params.orderID;
+
     try{
-        res.send('orderDetail OK');
+        const order = await detailOrder(id);
+        res.send(order);
     }catch(e){
         next(e);
     }

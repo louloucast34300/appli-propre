@@ -394,7 +394,7 @@ const handle_date_Search = (e) =>{
                                         </div>
                                         <div className="col-lg-2">
                                             <p className="color-5 f-little margin-neg">options</p>
-                                       <Link to='#'><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to='#'><BsEye/></Link>
+                                       <Link to='#'><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to={{pathname:`/order/${item._id}`}}><BsEye/></Link>
                                         </div>
                                         <div className="col-lg-2">
                                             <p className="color-5 f-little">Prix</p>
