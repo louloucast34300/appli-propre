@@ -30,14 +30,27 @@ const [doctorSearch, setDoctorSearch] = useState('');
 const [patientSearch, setPatientSearch] = useState('');
 const [dateSearch, setDateSearch] = useState('');
 
+
+//push bon de livraison pour facturation
+const [verifyFluxSelected,setVerifyFluxSelected] = useState(0);
+const [fluxArray, setFLuxArray] = useState([])
+
+// PopUp Facturation
+const [activeFactu, setActiveFactu] = useState(false);
+const activePopFactu = () =>{
+    setActiveFactu(true);
+}
+const desactivePopFactu = () =>{
+    setActiveFactu(false);
+}
 useEffect(()=>{
     getFlux();
     getClient();
     getPresta();
     date_of_day();
 },[]);
-
-
+console.log("fluxArray",fluxArray);
+console.log(client);
 const date_of_day = () =>{
     const today = new Date();
     let jj = today.getDate();
@@ -56,10 +69,12 @@ const date_of_day = () =>{
 const activePopUp = (e) =>{ // event au click pour switch entre la liste et le formulaire (opération ternaire au niveau du rendu.)
     e.preventDefault();
     setPopUpForm(true);
+
 }
 const DesactivePopUp = (e) =>{ //event au click pour switch entre la liste et le formulaire (opération ternaire au niveau du rendu.)
     e.preventDefault();
     setPopUpForm(false);
+    setFLuxArray([]);
 }
 const getPresta = () =>{
     axios.get('/api/prestations').then((res)=>{
@@ -183,6 +198,29 @@ const handle_date_Search = (e) =>{
     const value = e.target.value;
     setDateSearch(value) 
 }
+const verifyChecked = (e) =>{
+    let counter = verifyFluxSelected;
+    const checked = e.target.checked;
+    const id = e.target.value;
+    const flux = [...fluxList]
+    let array = [...fluxArray];
+    let element = '';
+    if(checked){
+       const findElement = flux.filter(t => t._id === id);
+       element = findElement;
+       array.push(element[0])
+       counter += 1;
+    }else if(!checked){
+        array.splice(array.findIndex(function(i){
+            return i._id === id;
+        }),1)
+        counter -= 1;
+    }
+    setFLuxArray(array.flat());
+    setVerifyFluxSelected(counter);
+}
+
+
   return (
       <>   
        {popUpForm?
@@ -330,8 +368,57 @@ const handle_date_Search = (e) =>{
     </div>
 </form>
        </div>
-       :
-       <div>
+       :// partie list ici....
+       <div className="list-part">
+           {activeFactu? 
+        
+        <div className="background-popup-factu">
+            <div className="popup-factu">
+                <div className="form-factu">
+                    <label htmlFor=""> Pour quel client voulez-vous facturer ?</label>
+                    <select name="" id="" className="form-select">
+                        {client.map((item,index)=>{
+                            return(
+                                <option key={index}>{item.lastname}</option>
+                            )
+                        })}
+                    </select>
+                <div className="recap-factu">
+                            <h2>Récapitulatif des bons de livraison</h2>
+                            {fluxArray.map((item,index)=>{
+                                return(
+                                    <div className="row row-list">
+                                        <div className="col-lg-3">
+                                            <p className="color-3 f-little">Bon de livraison</p>
+                                            <p className="line-0">N°{item.number_order}</p>
+                                        </div>
+                                        <div className="col-lg-3">
+                                            <p className="color-5 f-little">Date de livraison</p>
+                                            <p className="line-0 f-little">{item.date_of_creation}</p>
+                                        </div>
+                                        <div className="col-lg-3">
+                                            <p className="color-5 f-little ">Contenu</p>
+                                            <p className="line-0 f-little">{item.flux[0].presta}</p>
+                                        </div>
+                                        <div className="col-lg-3">
+                                            <p className="color-5 f-little">Prix</p>
+                                            <p className="line-0 f-medium">{item.price}€</p>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+
+                    </div>
+                    <div className="btnn-factu">
+                        <button className="btn-style-1">Générer la facture</button>
+                        <button className="btn-style-3" onClick={desactivePopFactu}>Revenir à la liste</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+           :
+           "false"
+         }
              <div className="header-page">
                     <h3 className="header-title">Flux de production</h3>
                     <div>
@@ -341,6 +428,7 @@ const handle_date_Search = (e) =>{
                         <p>Nombre de résultat :&nbsp; <span>{fluxList.length}</span> </p>
                         <p>Valeur totale :&nbsp;<span>{calculTotalFlux}€</span></p>
                     </div>
+                    {verifyFluxSelected > 0?<button className="btn-style-1" onClick={activePopFactu}> <AiOutlinePlus/> Créer une facture </button>:""}
                      <button className="btn-style-1" onClick={activePopUp}> <AiOutlinePlus/> Ajouter un bon de livraison</button>
                 </div>
                 <div className="container-fluid commande-list m-100">
@@ -373,11 +461,12 @@ const handle_date_Search = (e) =>{
                         })
                         .map((item,index)=>{
                             return(
-                                   <Link className="presta-link"key={index} to="#">
+                              
                                     <div className="row row-list">
                                         <div className="col-lg-2">
                                             <p className="color-3 f-little">Bon de livraison</p>
                                             <p className="line-0">N°{item.number_order}</p>
+                                            
                                         </div>
                                         <div className="col-lg-2">
                                             <p className="color-3 f-little">Docteur</p>
@@ -400,8 +489,25 @@ const handle_date_Search = (e) =>{
                                             <p className="color-5 f-little">Prix</p>
                                             <p className="line-0 f-medium">{item.price}€</p>
                                         </div>
+                                        <div className="col-lg-4">
+                                        <div class="demo">
+                                            <label class="toggle" for={`checkbox_${item._id}`}>
+                                                <input type="checkbox" class="toggle__input btn-checkbox" id={`checkbox_${item._id}`}  value={item._id} onChange={verifyChecked}  />
+                                                <span class="toggle-track">
+                                                    <span class="toggle-indicator">
+                                                        <span class="checkMark">
+                                                            <svg viewBox="0 0 24 24" id="ghq-svg-check" role="presentation" aria-hidden="true">
+                                                                <path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
+                                                            </svg>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                              
+                                            </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </Link>
+                       
                             )
                         })}
                     </div>

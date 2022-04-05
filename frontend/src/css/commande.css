@@ -215,3 +215,41 @@ input[type="checkbox"] {
 .mt-neg{
     margin-top:-10px;
 }
+
+
+/*popup factu */
+.list-part{
+    position:relative;
+}
+.background-popup-factu{
+    position:absolute;
+    height:100%;
+    width:100%;
+    top:0px;
+    left:0;
+    background-color: rgba(0,0,0,.4);
+    z-index:100;
+    box-shadow: 2px 2px 10px black;
+
+}
+.popup-factu{
+    width:900px;
+    height:600px;
+    background-color:white;
+    position: fixed; /* postulat de départ */
+    top: 50%; left: 50%; /* à 50%/50% du parent référent */
+    transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
+    border-radius:10px;
+}
+.form-factu{
+    padding:100px;
+}
+.form-factu select{
+    max-width:278px;
+}
+.recap-factu h2{
+    font-size:16px;
+}
+.recap-factu{
+    margin-top:40px;
+}
