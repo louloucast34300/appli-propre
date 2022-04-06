@@ -8,7 +8,7 @@ exports.createOrder = (body, total_price) =>{
        patient:body.patient,
        price:total_price,
        date_of_creation:body.date,
-
+       inside_facture : false,
     });
     return newOrder.save();
 };
@@ -21,3 +21,4 @@ exports.listOrder = () =>{
 exports.detailOrder = (id) =>{
    return Order.findById({_id : id}).exec();
 }
+

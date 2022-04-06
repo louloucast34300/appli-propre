@@ -29,14 +29,53 @@ const [livraisonSearch, setLivraisonSearch] = useState('');
 const [doctorSearch, setDoctorSearch] = useState('');
 const [patientSearch, setPatientSearch] = useState('');
 const [dateSearch, setDateSearch] = useState('');
-
+const [counterFlux, setCounterFlux] = useState(0);
 
 //push bon de livraison pour facturation
 const [verifyFluxSelected,setVerifyFluxSelected] = useState(0);
 const [fluxArray, setFLuxArray] = useState([])
+const [FactuType, setFactuType] = useState('')
+const [doctorFactu, setDoctorFactu] = useState('');
 
 // PopUp Facturation
 const [activeFactu, setActiveFactu] = useState(false);
+
+const handle_change_factu = (e) =>{
+    const value = e.target.value;
+    setFactuType(value)
+}
+const handle_change_doctor_facture = (e) =>{
+    const value = e.target.value;
+    setDoctorFactu(value);
+}
+
+const calculNumberFlux = (response) =>{
+    let counter = 0;
+    for(let i = 0; i< response.length ; i++){
+        if(response[i].inside_facture === false){
+            counter += 1;
+        }
+    }
+    setCounterFlux(counter)
+}
+
+
+const createFacture = async () =>{
+    const flux = await [...fluxArray]
+    const data =[{
+        doctor: doctorFactu,
+        type: FactuType,
+        flux: flux,
+    }];
+   await axios.post('/api/factu/create-factu', data);
+   window.location.replace('/facturation');
+}
+
+
+
+
+
+
 const activePopFactu = () =>{
     setActiveFactu(true);
 }
@@ -49,8 +88,9 @@ useEffect(()=>{
     getPresta();
     date_of_day();
 },[]);
-console.log("fluxArray",fluxArray);
-console.log(client);
+
+
+
 const date_of_day = () =>{
     const today = new Date();
     let jj = today.getDate();
@@ -91,14 +131,17 @@ const getClient = ()=>{
 const getFlux = () =>{
     axios.get('/api/order').then((res)=>{
         const response  = res.data;
-        calcul_total_price_flux(response)
+        calcul_total_price_flux(response);
+        calculNumberFlux(response);
         setFluxList(response)
     })
 }
 function calcul_total_price_flux  (response) {
     let value = 0; 
     for(let i = 0; i < response.length; i++){
-         value += response[i].price;
+        if(response[i].inside_facture === false){
+            value += response[i].price;
+        }
     }
     setCalculTotalFlux(value)
 }
@@ -371,20 +414,33 @@ const verifyChecked = (e) =>{
        :// partie list ici....
        <div className="list-part">
            {activeFactu? 
-        
         <div className="background-popup-factu">
             <div className="popup-factu">
                 <div className="form-factu">
-                    <label htmlFor=""> Pour quel client voulez-vous facturer ?</label>
-                    <select name="" id="" className="form-select">
+                <div className="d-row-flex">
+                    <div className="form-group">
+                          <label htmlFor=""> Pour quel client voulez-vous facturer ?</label>
+                    <select name="" id="" className="form-select" onChange={handle_change_doctor_facture}>
+                        <option value="">Choisir un docteur</option>
                         {client.map((item,index)=>{
                             return(
-                                <option key={index}>{item.lastname}</option>
+                                <option key={index} value={item.lastname}>{item.lastname}</option>
                             )
                         })}
                     </select>
+                    </div>
+                    <div className="form-group">
+                           <label htmlFor=""> Quel type de facture voulez-vous ?</label>
+                        <select name="" id="" className="form-select" onChange={handle_change_factu}>
+                            <option value="">Choisir un type de facture</option>
+                            <option value="Facture Pro Forma">Facture Pro Forma</option>
+                            <option value="Facture Définitive">Facture Définitive</option>
+                        </select>
+                    </div>
+                </div>
+                  
                 <div className="recap-factu">
-                            <h2>Récapitulatif des bons de livraison</h2>
+                            <h2>Récapitulatif des bons de livraison à facturer</h2>
                             {fluxArray.map((item,index)=>{
                                 return(
                                     <div className="row row-list">
@@ -398,7 +454,7 @@ const verifyChecked = (e) =>{
                                         </div>
                                         <div className="col-lg-3">
                                             <p className="color-5 f-little ">Contenu</p>
-                                            <p className="line-0 f-little">{item.flux[0].presta}</p>
+                                            <p className="m-neg-10 f-little">{item.flux[0].presta}</p>
                                         </div>
                                         <div className="col-lg-3">
                                             <p className="color-5 f-little">Prix</p>
@@ -409,15 +465,15 @@ const verifyChecked = (e) =>{
                             })}
 
                     </div>
-                    <div className="btnn-factu">
-                        <button className="btn-style-1">Générer la facture</button>
+                    <div className="btn-factu">
+                        <button type="submit" className="btn-style-1" onClick={createFacture}>Générer la facture</button>
                         <button className="btn-style-3" onClick={desactivePopFactu}>Revenir à la liste</button>
                     </div>
                 </div>
             </div>
         </div>
            :
-           "false"
+           <div></div>
          }
              <div className="header-page">
                     <h3 className="header-title">Flux de production</h3>
@@ -425,7 +481,7 @@ const verifyChecked = (e) =>{
                         <h3 className={messageSuccess===""?"message-success":"message-success active"}>{messageSuccess}</h3>
                     </div>
                     <div className="calcul-total-flux">
-                        <p>Nombre de résultat :&nbsp; <span>{fluxList.length}</span> </p>
+                        <p>Nombre de résultat :&nbsp; <span>{counterFlux}</span> </p>
                         <p>Valeur totale :&nbsp;<span>{calculTotalFlux}€</span></p>
                     </div>
                     {verifyFluxSelected > 0?<button className="btn-style-1" onClick={activePopFactu}> <AiOutlinePlus/> Créer une facture </button>:""}
@@ -458,8 +514,8 @@ const verifyChecked = (e) =>{
                             return a.date_of_creation.includes(dateSearch)
                         }).filter((a)=>{
                             return a.number_order.toString().includes(livraisonSearch)
-                        })
-                        .map((item,index)=>{
+                        }).filter((a)=> a.inside_facture === false)
+                        .slice(0).reverse().map((item,index)=>{
                             return(
                               
                                     <div className="row row-list">
@@ -479,7 +535,7 @@ const verifyChecked = (e) =>{
                                         </div>
                                         <div className="col-lg-2">
                                             <p className="color-5 f-little ">Contenu</p>
-                                            <p className="line-0 f-little">{item.flux[0].presta}</p>
+                                            <p className="m-neg-10 f-little">{item.flux[0].presta}</p>
                                         </div>
                                         <div className="col-lg-2">
                                             <p className="color-5 f-little margin-neg">options</p>
@@ -492,7 +548,7 @@ const verifyChecked = (e) =>{
                                         <div className="col-lg-4">
                                         <div class="demo">
                                             <label class="toggle" for={`checkbox_${item._id}`}>
-                                                <input type="checkbox" class="toggle__input btn-checkbox" id={`checkbox_${item._id}`}  value={item._id} onChange={verifyChecked}  />
+                                                <input type="checkbox" class="toggle__input btn-checkbox" id={`checkbox_${item._id}`} value={item._id} onChange={verifyChecked}  />
                                                 <span class="toggle-track">
                                                     <span class="toggle-indicator">
                                                         <span class="checkMark">
@@ -502,20 +558,18 @@ const verifyChecked = (e) =>{
                                                         </span>
                                                     </span>
                                                 </span>
-                                              
                                             </label>
                                             </div>
                                         </div>
                                     </div>
-                       
-                            )
-                        })}
-                    </div>
-                </div>
-                }
-      </>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                        }
+            </>
 
-  )
-}
+        )
+        }
 
 export default Commande

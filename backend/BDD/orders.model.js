@@ -9,6 +9,7 @@ const orderSchema = schema ({
     patient:{type:String},
     price:{type:Number},
     date_of_creation:{type:String},
+    inside_facture : {type:Boolean},
 },{
     timestamp:true,
 });

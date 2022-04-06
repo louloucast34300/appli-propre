@@ -22,11 +22,13 @@ noir mat : #3A3E4A rgba(58, 62, 74,1);
 /*PADDING & MARGIN*/
 .p-10{padding:10px;}
 .m-100{margin-top:100px;}
+.m-neg-10{margin-top:-10px;}
 
 /*FONT*/
 .f-little{font-size:12px;}
 .f-medium{font-size:14px;}
 .line-0{line-height:0px;}
+.line-30{line-height:30px;}
 
 /*STRUCTURE*/
 a, a:hover{text-decoration:none;}

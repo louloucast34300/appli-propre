@@ -234,9 +234,9 @@ input[type="checkbox"] {
 }
 .popup-factu{
     width:900px;
-    height:600px;
+    height:auto;
     background-color:white;
-    position: fixed; /* postulat de départ */
+    position: absolute; /* postulat de départ */
     top: 50%; left: 50%; /* à 50%/50% du parent référent */
     transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
     border-radius:10px;
