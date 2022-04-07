@@ -23,10 +23,14 @@
 }
 .note-content{
     margin-top:20px;
-    height:40vh;
+    min-height:255px;
     overflow: scroll;
 }
-
+@media(min-width:1910px){
+    .note-content{
+        min-height:387px;
+    }
+}
 .note-content.card-dashboard .row{
     width:100%;
     border-bottom:1px solid rgba(58, 62, 74,.3)
@@ -106,4 +110,8 @@
     transition:all .2s ease-in-out;
     transform:scale(1.4);
     color:green;
+}
+
+.chart-dashboard{
+    margin-top:20px;
 }

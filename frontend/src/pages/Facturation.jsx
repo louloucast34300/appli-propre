@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import '../css/propre.css';
 import {AiOutlinePlus} from 'react-icons/ai';
 import {GiTireIronCross} from 'react-icons/gi'
-import {FiEdit} from 'react-icons/fi'
+import {TiCancelOutline} from 'react-icons/ti'
 import {BsEye} from 'react-icons/bs'
 const Facturation = () => {
 
@@ -51,7 +51,7 @@ const changeStatut = async (e) =>{
                 <input  className="input-style-1" type="text" id="n_docteur"/>
             </div>
             <div className="col-lg-4 d-col-flex">
-                <label className="label-style-1" htmlFor="n_date">Date du bon :</label>
+                <label className="label-style-1" htmlFor="n_date">Date de la facture:</label>
                 <input className="input-style-1" type="text" id="n_date"/>
             </div>
         </div>
@@ -70,22 +70,22 @@ const changeStatut = async (e) =>{
                 <p className="color-5 f-little">Date de création</p>
                 <p className="line-30 f-little">{item.date_of_creation}</p>
             </div>
-              <div className="col-lg-2">
+              <div className="col-lg-1">
                 <p className="color-3 f-little">Docteur</p>
                 <p className="color-1 f-medium line-30">{item.doctor}</p>
               </div>
                 <div className="col-lg-1">
                 <p className="color-3 f-little">Prix total</p>
-                <p className="color-1 f-medium line-30">120€</p>
+                <p className="color-1 f-medium line-30">{item.total}€</p>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-3">
                 <p className="color-3 f-little">Options</p>
-                <Link to='#'><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to={{pathname:`/order/${item._id}`}}><BsEye/></Link>
+                <button className="btn-style-2 adjust adjust2"id='#'><TiCancelOutline/>Annuler</button> <Link  className="btn-style-3 adjust" to={{pathname:`/facturation/${item._id}`}}><BsEye/> Imprimer</Link>
               </div>
               <div className="col-lg-2">
               <p className="color-3 f-little">Valider la facture</p>
                 <div class="demo">
-                    <label class="toggle" for={`checkbox_${item._id}`}>
+                    <label class="toggle toggle-factu" for={`checkbox_${item._id}`}>
                         <input type="checkbox" class="toggle__input btn-checkbox" id={`checkbox_${item._id}`}  value={item._id} onChange={changeStatut} checked={item.definitive?'checked':''}/>
                         <span class="toggle-track">
                             <span class="toggle-indicator">

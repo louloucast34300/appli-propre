@@ -42,7 +42,8 @@ a, a:hover{text-decoration:none;}
 .btn-style-2:hover,.btn-style-3:hover{transition:all .2s ease-in-out;color:white;}
 .btn-style-2:hover{background-color:#771e68;}
 .btn-style-3:hover{background-color: #0a0b0e;}
-
+.adjust{padding: 5px 10px; margin:0px}
+.adjust2{padding:3px 10px;}
 
 /*INPUT*/
 .input-style-1{background-color: transparent;border: none;border-bottom: 1px solid #B832A2;color:white;}
@@ -63,6 +64,9 @@ a, a:hover{text-decoration:none;}
     display: flex;
     font-weight: 700;
     margin-bottom: 16px;
+}
+.toggle-factu{
+    margin-top:-10px !important;
 }
 .toggle:last-of-type {
     margin: 0;

@@ -3,7 +3,8 @@ p{
 }
 .view-pdf{
     width:21cm;
-    height:29.7cm;
+   /* height:29.7cm;*/
+   height:auto;
     border:1px solid white;
     background-color: white;
 
@@ -45,6 +46,7 @@ table th {
 .five-content{
     margin-top:30px;
     width:50%;
+    margin-left:50%;
 }
 .total-price-presta{
     display:flex;
@@ -95,6 +97,9 @@ table th {
 }
 .six-content .laboratoire-detail-1 p{
     text-align: center;
+}
+.four-content{
+    margin-top:40px;
 }
 @media all {
     .page-break {

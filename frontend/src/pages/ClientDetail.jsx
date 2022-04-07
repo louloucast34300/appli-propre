@@ -105,33 +105,32 @@ const GetCommande = () =>{
             {clientCommande.map((item,index)=>{
             return(
               <Link className="presta-link"key={index} to="#">
-                                    <div className="row row-list">
-                                        <div className="col-lg-2">
-                                            <p className="color-3 f-little">Bon de livraison</p>
-                                            <p className="line-0">N°{item.number_order}</p>
-                                        </div>
-                                        <div className="col-lg-2">
-                                            <p className="color-5 f-little">Date de livraison</p>
-                                            <p className="line-0 f-little">{item.date_of_creation}</p>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <p className="color-5 f-little ">Contenu</p>
-                                            <p className="line-0 f-little">{item.flux[0].presta}</p>
-                                        </div>
-                                        <div className="col-lg-2">
-                                            <p className="color-5 f-little margin-neg">options</p>
-                                       <Link to='#'><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to='#'><BsEye/></Link>
-                                        </div>
-                                        <div className="col-lg-2">
-                                            <p className="color-5 f-little">Prix</p>
-                                            <p className="line-0 f-medium">{item.price}€</p>
-                                        </div>
-                                    </div>
-                                </Link>
+                <div className="row row-list">
+                    <div className="col-lg-2">
+                        <p className="color-3 f-little">Bon de livraison</p>
+                        <p className="line-0">N°{item.number_order}</p>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="color-5 f-little">Date de livraison</p>
+                        <p className="line-0 f-little">{item.date_of_creation}</p>
+                    </div>
+                    <div className="col-lg-4">
+                        <p className="color-5 f-little ">Contenu</p>
+                        <p className="line-0 f-little">{item.flux[0].presta}</p>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="color-5 f-little margin-neg">options</p>
+                    <Link to='#'><FiEdit/></Link> <a  id='#'><GiTireIronCross/></a> <Link  to={`/order/${item._id}`}><BsEye/></Link>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="color-5 f-little">Prix</p>
+                        <p className="line-0 f-medium">{item.price}€</p>
+                    </div>
+                </div>
+            </Link>
             )
           })}
           </div>
-          
         </div>
         <div class="tab-pane fade" id="attente" role="tabpanel" aria-labelledby="attente-tab">
           <p>liste des factures non classée</p>

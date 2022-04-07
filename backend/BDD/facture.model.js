@@ -10,6 +10,7 @@ const factureSchema = schema ({
     date_of_creation:{type:String},
     flux : {type:Array},
     canceled:{type:Boolean},
+    total:{type:Number},
 },{
     timestamp:true,
 });
