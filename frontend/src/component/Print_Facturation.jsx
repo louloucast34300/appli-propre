@@ -63,7 +63,7 @@ const getDate = () =>{
          <p><span>Smile Art.</span><br></br>202 Rue des Voiliers<br></br>34280 LA GRANDE MOTTE <br></br>FRANCE<br></br>Tèl : 06.80.60.19.96<br></br>Email: colettecros11@gmail.com</p>
        </div>
        <div className="destinataire">
-         <p><span>{doctor[0].username} {doctor[0].lastname} </span><br></br>{doctor[0].address}<br></br>34000 Montpellier<br></br>siret : {doctor[0].n_siret}</p>
+         <p><span>{doctor[0].username} {doctor[0].lastname} </span><br></br>{doctor[0].address}<br></br>{doctor[0].postal_code} {doctor[0].city}<br></br>siret : {doctor[0].n_siret}</p>
        </div>
      </div>
      <div className="third-content">

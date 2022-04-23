@@ -18,11 +18,15 @@ noir mat : #3A3E4A rgba(58, 62, 74,1);
 .color-3{color:rgba(96, 186, 237,1)}
 .color-4{color:rgba(184, 50, 162,1)}
 .color-5{color:rgba(77, 77, 77, 0.575)}/*gris*/
+.color-3-cancel{color:rgba(184, 50, 162,1)};
 
 /*PADDING & MARGIN*/
 .p-10{padding:10px;}
 .m-100{margin-top:100px;}
+.m-50{margin-top:50px;}
 .m-neg-10{margin-top:-10px;}
+.align-right{text-align:right;}
+.main-view{padding-top:60px;}
 
 /*FONT*/
 .f-little{font-size:12px;}
@@ -54,8 +58,6 @@ a, a:hover{text-decoration:none;}
 /*LISTE & TABLEAU*/
 .row-list{background-color: #F2FAFF;padding:10px;border-bottom:0.5px solid grey}
 .row-list:hover{background-color: rgba(58, 62, 74,0.05);}
-
-
 
 /* checkbox*/
 .toggle {

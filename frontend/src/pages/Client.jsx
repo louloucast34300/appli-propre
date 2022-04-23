@@ -124,6 +124,18 @@ const DeleteData = (e) =>{ // delete la data ciblé , ferme la popUp delete et r
                 <div className="form-outline mb-4">
                     <input type="text" id="address" className="form-control" name="address" placeholder="Adresse postal" />
                 </div>
+                <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-outline">
+                        <input type="text" id="postal_code" className="form-control" name="postal_code" placeholder="Code postal" />
+                    </div>
+                    </div>
+                        <div className="col">
+                            <div className="form-outline">
+                            <input type="text" id="city" className="form-control" name="city" placeholder="Ville" />
+                        </div>
+                    </div>
+                </div>
                 <div className="form-outline mb-4">
                     <input type="email" id="email" className="form-control"  name="email" placeholder="Email"/>
                 </div>

@@ -46,3 +46,12 @@ exports.factuDetail = (id) =>{
 exports.doctorDetail = (name) =>{
     return Client.find({lastname : name}).exec();
 }
+
+exports.factuCancel = (id) =>{
+  Facture.findByIdAndUpdate(id, {definitive:false, canceled:true}).exec();
+  return Facture.find({_id : id}).exec();
+}
+
+exports.queryFactuByDoctor = (name) =>{
+    return Facture.find({doctor : name}).exec();
+}

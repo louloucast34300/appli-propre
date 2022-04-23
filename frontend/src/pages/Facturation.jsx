@@ -10,6 +10,7 @@ import {BsEye} from 'react-icons/bs'
 const Facturation = () => {
 
 const [data, setData] = useState([]);
+const [cancelView, setCancelView] = useState(false);
 console.log(data);
 
 useEffect(()=>{
@@ -33,12 +34,19 @@ const changeStatut = async (e) =>{
 
 };
 
-
-
+const cancelFactu = async (e) =>{
+  const id = e.target.id;
+  await axios.get(`/api/factu/cancel-factu/${id}`);
+  getData();
+}
+const handleCancelView = () =>{
+  setCancelView(!cancelView);
+}
   return (
     <div>
       <div className="header-page">
-        <h3 className="header-title">Factures</h3>
+        <h3 className="header-title">{cancelView ? "Factures annulées" : "Factures"}</h3>
+        <button onClick={handleCancelView}>{cancelView ? "Afficher les factures": "Afficher les factures annulées"}</button>
       </div>
       <div className="container-fluid commande-list m-100">
         <div className="row radius-top bg-1 p-10">
@@ -55,34 +63,37 @@ const changeStatut = async (e) =>{
                 <input className="input-style-1" type="text" id="n_date"/>
             </div>
         </div>
-        {data.slice(0).reverse().map((item,index)=>{
+        {data.filter(el =>el.canceled === cancelView).slice(0).reverse().map((item,index)=>{
           return(
             <div key={index}className="row row-list">
               <div className="col-lg-1">
-                <p className="color-3 f-little">Facture</p>
+                <p className={cancelView?"color-3-cancel f-little":"color-3 f-little"}>Facture</p>
                 <p className="line-30">N°{item.number_order_facture}</p>
               </div>
               <div className="col-lg-2">
-                <p className="color-3 f-little">Statut</p>
-                <p className="color-1 f-medium line-30">{item.definitive?"Facture définitive": "Pro forma"}</p>
+                <p className={cancelView?"color-3-cancel f-little":"color-3 f-little"}>Statut</p>
+                <p className="color-1 f-medium line-30">{item.canceled? "Facture annulée": item.definitive?"Facture définitive" : "Pro forma"}</p>
               </div>
               <div className="col-lg-2">
                 <p className="color-5 f-little">Date de création</p>
                 <p className="line-30 f-little">{item.date_of_creation}</p>
             </div>
               <div className="col-lg-1">
-                <p className="color-3 f-little">Docteur</p>
+                <p className={cancelView?"color-3-cancel f-little":"color-3 f-little"}>Docteur</p>
                 <p className="color-1 f-medium line-30">{item.doctor}</p>
               </div>
                 <div className="col-lg-1">
-                <p className="color-3 f-little">Prix total</p>
+                <p className={cancelView?"color-3-cancel f-little":"color-3 f-little"}>Prix total</p>
                 <p className="color-1 f-medium line-30">{item.total}€</p>
               </div>
-              <div className="col-lg-3">
-                <p className="color-3 f-little">Options</p>
-                <button className="btn-style-2 adjust adjust2"id='#'><TiCancelOutline/>Annuler</button> <Link  className="btn-style-3 adjust" to={{pathname:`/facturation/${item._id}`}}><BsEye/> Imprimer</Link>
+              <div className={cancelView?"col align-right":"col-lg-3"}>
+                <p className={cancelView?"color-3-cancel f-little":"color-3 f-little"}>Options</p>
+               {item.canceled ? <div></div>:<button className="btn-style-2 adjust adjust2" id={item._id} onClick={cancelFactu}><TiCancelOutline/>Annuler</button> }  <Link  className="btn-style-3 adjust" to={{pathname:`/facturation/${item._id}`}}><BsEye/> Imprimer</Link>
               </div>
-              <div className="col-lg-2">
+              {item.canceled?
+              <div></div>
+            :
+             <div className="col-lg-2">
               <p className="color-3 f-little">Valider la facture</p>
                 <div class="demo">
                     <label class="toggle toggle-factu" for={`checkbox_${item._id}`}>
@@ -99,6 +110,8 @@ const changeStatut = async (e) =>{
                     </label>
                     </div>
                 </div>
+            }
+             
             </div>
           )
         })}

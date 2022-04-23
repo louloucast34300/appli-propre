@@ -429,14 +429,6 @@ const verifyChecked = (e) =>{
                         })}
                     </select>
                     </div>
-                    <div className="form-group">
-                           <label htmlFor=""> Quel type de facture voulez-vous ?</label>
-                        <select name="" id="" className="form-select" onChange={handle_change_factu}>
-                            <option value="">Choisir un type de facture</option>
-                            <option value="Facture Pro Forma">Facture Pro Forma</option>
-                            <option value="Facture Définitive">Facture Définitive</option>
-                        </select>
-                    </div>
                 </div>
                   
                 <div className="recap-factu">
@@ -487,7 +479,7 @@ const verifyChecked = (e) =>{
                     {verifyFluxSelected > 0?<button className="btn-style-1" onClick={activePopFactu}> <AiOutlinePlus/> Créer une facture </button>:""}
                      <button className="btn-style-1" onClick={activePopUp}> <AiOutlinePlus/> Ajouter un bon de livraison</button>
                 </div>
-                <div className="container-fluid commande-list m-100">
+                <div className="container-fluid commande-list m-50">
                     <div className="row radius-top bg-1 p-10">
                         <div className="col-lg-3 d-col-flex">
                             <label className="label-style-1" htmlFor="n_livraison">N° de livraison :</label>

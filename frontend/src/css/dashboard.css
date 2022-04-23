@@ -23,7 +23,7 @@
 }
 .note-content{
     margin-top:20px;
-    min-height:255px;
+    min-height:330px;
     overflow: scroll;
 }
 @media(min-width:1910px){

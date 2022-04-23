@@ -4,14 +4,12 @@ import {BrowserRouter as Router, Route, Routes as Switch, Navigate} from 'react-
 import axios from 'axios';
 
 //components
-import NavbarHori from './component/NavbarHori'
-import NavbarVerti from './component/NavbarVerti'
+
 
 //pages
 import Dashboard from './pages/Dashboard'
 import Client from './pages/Client'
 import Prestation from './pages/Prestation';
-import Order from './pages/Order';
 import Facturation from './pages/Facturation';
 import Inscription from './pages/Inscription';
 import Connexion from './pages/Connexion';
@@ -21,6 +19,7 @@ import EditPrestation from './pages/EditPrestation';
 import Commande from './pages/Commande';
 import BonDeLivraisonDetail from './pages/BonDeLivraisonDetail';
 import FacturationDetail from './pages/FacturationDetail';
+import {Navbar} from './component/navbar/Navbar';
 //css
 import './css/general.css'
 
@@ -43,27 +42,32 @@ useEffect(()=>{
 }
   return (
     <Router>
-    <div className="container-fluid">
+        {user? <Navbar delete={deleteSession} />:<div></div>} 
+    <div className="container-fluid main-view">
       <div className="row">
-        <div className="col-lg-2 color1">
-          <NavbarVerti delete={deleteSession}/>
-        </div>
-        <div className="col-lg-10 color2">
-          <NavbarHori/>
-        </div>
-        <div className="col-lg-2"></div>
-        <div className="col-lg-10">
+        <div className="col-lg-12">
+      
               <Switch>
                 <Route path="/" element={user?<Dashboard/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/client" element={user?<Client/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/prestation" element={user?<Prestation/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/prestation/edit/:prestaId" element={user?<EditPrestation/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/facturation" element={user?<Facturation/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/facturation/:factuId" element={user?<FacturationDetail/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/inscription" element={user?<Inscription/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/client/edit/:clientId" element={user?<EditClient/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/client/:clientId" element={user?<ClientDetail/>:<Navigate to="/connexion"/>}/>
+
                 <Route path="/order" element={user?<Commande/>:<Navigate to="/connexion"/>}/>
+                
                 <Route path="/order/:orderId" element={user?<BonDeLivraisonDetail/>:<Navigate to="/connexion"/>}/>
 
                 <Route path="/connexion" element={<Connexion/>}/>

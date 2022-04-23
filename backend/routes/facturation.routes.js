@@ -5,7 +5,9 @@ const {
     pro_to_facture,
     facture_to_pro,
     detailFactu,
-    detailDoctor
+    detailDoctor,
+    cancelFactu,
+    getFactuByDoctor
 } = require('../controllers/facturation.controller');
 
 // link vers ici : /api/factu/...
@@ -18,5 +20,7 @@ router.get('/factu-def/:factuId', pro_to_facture);
 router.get('/pro-format/:factuId', facture_to_pro);
 router.get('/detail/:factuId', detailFactu);
 router.get('/doctor-factu/:nameDoctor', detailDoctor);
+router.get('/cancel-factu/:factuId', cancelFactu);
+router.get('/get-factu-doctor/:nameDoctor', getFactuByDoctor);
 module.exports = router;
 

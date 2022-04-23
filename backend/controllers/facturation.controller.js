@@ -1,5 +1,5 @@
 
-const {factuCreate,factuList, changeInPro, changeInFacture,cloture_bon_de_livraison,reinject_bon_de_livraison,factuDetail,doctorDetail} = require('../query/facturation.query')
+const {factuCreate,factuList, changeInPro, changeInFacture,cloture_bon_de_livraison,reinject_bon_de_livraison,factuDetail,doctorDetail,factuCancel,queryFactuByDoctor} = require('../query/facturation.query')
 
 
 exports.createFactu = async (req, res, next) =>{
@@ -39,10 +39,8 @@ exports.listFactu = async (req, res, next) =>{
 
 exports.pro_to_facture = async (req,res, next) =>{
     const id = req.params.factuId;
-    console.log(id)
     try{
         const facture = await changeInFacture(id);
-
         console.log(facture[0].flux)
         facture[0].flux.forEach((el)=>{
                 const id = el._id;
@@ -87,5 +85,29 @@ exports.detailDoctor = async (req, res, next) =>{
         res.send(doctor);
     }catch(e){
         next(e);
+    }
+}
+
+exports.cancelFactu = async (req, res, next) =>{
+    const id = req.params.factuId;
+    try{
+        const facture = await factuCancel(id);
+        facture[0].flux.forEach((el)=>{
+            const id = el._id;
+            reinject_bon_de_livraison(id)
+    })
+        res.end();
+    }catch(e){
+        next(e);
+    }
+}
+
+exports.getFactuByDoctor = async (req, res, next) =>{
+    const name = req.params.nameDoctor;
+    try{
+        const facture = await queryFactuByDoctor(name)
+        res.send(facture);
+    }catch(e){
+    next(e);
     }
 }

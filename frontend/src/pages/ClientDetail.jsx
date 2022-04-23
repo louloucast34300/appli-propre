@@ -16,6 +16,7 @@ import {IoIosArrowBack} from 'react-icons/io';
 const ClientDetail = () => {
 const nf = "non fournie"
 const client = useParams().clientId;
+
 const [clientData, setClientData] = useState([{
     username:nf,
     lastname:nf,
@@ -24,28 +25,44 @@ const [clientData, setClientData] = useState([{
     n_siret:nf,
     address:nf,
 }]);
-const [clientCommande,setCLientCommande] = useState([])
-console.log(clientCommande);
+
+const [clientCommande,setCLientCommande] = useState([]);
+const [clientFactu, setClientFactu] = useState([]);
+
+
+console.log(
+  clientFactu, clientData.lastname
+);
+
+
 
 useEffect(()=>{
     GetData();
     GetCommande();
+
 },[])
 
-const GetData = () =>{
-    axios.get(`/api/clients/detail/${client}`).then((res)=>{
+const GetData = async () =>{
+     await axios.get(`/api/clients/detail/${client}`).then((res)=>{
         const response = res.data;
         setClientData(response);
+
+          axios.get(`/api/factu/get-factu-doctor/${response.lastname}`).then((res)=>{
+          const response = res.data;
+          setClientFactu(response);
+        })
     }).catch((err)=>{
         console.log("Erreur", err);
     })
+  
 }
-const GetCommande = () =>{
-  axios.get(`/api/clients/commande-client/${client}`).then((res)=>{
+const GetCommande = async () =>{
+  await axios.get(`/api/clients/commande-client/${client}`).then((res)=>{
     const response = res.data;
     setCLientCommande(response)
   })
 }
+
 
 
 
@@ -54,9 +71,8 @@ const GetCommande = () =>{
         <div className="row">
             <div className="col-lg-12">
                 <div className="header-client-detail">
-                    <h3>Fiche Client</h3>
+                    <h3 className="header-title">Fiche Client</h3>
                     <div>
-                     
                         <button className="btn-style-1"> <Link className="link-version-btn"to="/client"><IoIosArrowBack/> Retour</Link></button>
                         <button className="btn-style-1"><MdOutlineMessage/> Envoyer un message</button>
                         <button className="btn-style-1"><AiOutlinePhone/> Appeler le client</button>
@@ -97,6 +113,7 @@ const GetCommande = () =>{
         <li class="nav-item">
           <a class="nav-link link-secondary  " id="facture-tab" data-bs-toggle="tab" data-bs-target="#facture" href="#">Factures</a>
         </li>
+
       </ul>
 
       <div class="tab-content" id="tabContent">
@@ -133,13 +150,68 @@ const GetCommande = () =>{
           </div>
         </div>
         <div class="tab-pane fade" id="attente" role="tabpanel" aria-labelledby="attente-tab">
-          <p>liste des factures non classée</p>
+        <div className="container-fluid">
+               {clientFactu.filter(el => el.definitive === false && el.canceled === false).slice(0).reverse().map((item,index)=>{
+            return (
+              <div key={index}className="row row-list">
+              <div className="col-lg-1">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Facture</p>
+                <p className="line-30">N°{item.number_order_facture}</p>
+              </div>
+              <div className="col-lg-3">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Statut</p>
+                <p className="color-1 f-medium line-30">{item.canceled? "Facture annulée": item.definitive?"Facture définitive" : "Pro forma"}</p>
+              </div>
+              <div className="col-lg-3">
+                <p className="color-5 f-little">Date de création</p>
+                <p className="line-30 f-little">{item.date_of_creation}</p>
+            </div>
+              <div className="col-lg-3">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Docteur</p>
+                <p className="color-1 f-medium line-30">{item.doctor}</p>
+              </div>
+                <div className="col-lg-2">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Prix total</p>
+                <p className="color-1 f-medium line-30">{item.total}€</p>
+              </div>
+              </div>
+            )
+          })}
+          </div>
         </div>
         <div class="tab-pane fade" id="patient" role="tabpanel" aria-labelledby="patient-tab">
           <p>Listes des patients</p>
         </div>
         <div class="tab-pane fade " id="facture" role="tabpanel" aria-labelledby="patient-tab">
-          <p>Listes des factures</p>
+          <div className="container-fluid">
+               {clientFactu.filter(el => el.definitive === true || el.canceled===true).slice(0).reverse().map((item,index)=>{
+            return (
+              <div key={index}className="row row-list">
+              <div className="col-lg-1">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Facture</p>
+                <p className="line-30">N°{item.number_order_facture}</p>
+              </div>
+              <div className="col-lg-3">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Statut</p>
+                <p className="color-1 f-medium line-30">{item.canceled? "Facture annulée": item.definitive?"Facture définitive" : "Pro forma"}</p>
+              </div>
+              <div className="col-lg-3">
+                <p className="color-5 f-little">Date de création</p>
+                <p className="line-30 f-little">{item.date_of_creation}</p>
+            </div>
+              <div className="col-lg-3">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Docteur</p>
+                <p className="color-1 f-medium line-30">{item.doctor}</p>
+              </div>
+                <div className="col-lg-2">
+                <p className={item.canceled?"color-3-cancel f-little":"color-3 f-little"}>Prix total</p>
+                <p className="color-1 f-medium line-30">{item.total}€</p>
+              </div>
+              </div>
+            )
+          })}
+          </div>
+       
         </div>
       </div>
     </div>

@@ -6,6 +6,8 @@ const clientSchema = schema ({
     lastname:{type:String},
     email:{type:String},
     address:{type:String},
+    postal_code:{type:String},
+    city:{type:String},
     phone:{type:Number},
     n_siret:{type:String},
     infos:{type:String}

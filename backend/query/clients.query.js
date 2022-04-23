@@ -7,6 +7,8 @@ exports.createDoctor = (body) =>{
         lastname : body.lastname,
         email : body.email,
         address : body.address,
+        postal_code : body.postal_code,
+        city: body.city,
         phone : body.phone,
         n_siret : body.n_siret,
         infos : body.infos
