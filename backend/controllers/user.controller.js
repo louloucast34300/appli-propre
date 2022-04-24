@@ -34,7 +34,8 @@ exports.SessionCreate = (req, res, next) =>{
 
 exports.SessionDelete = (req, res, next)=>{
     console.log("deconnecté")
-    res.clearCookie('connect.sid', {path: '/'}).status(200).send('Ok.');
+    //res.clearCookie('connect.sid', {path: '/'}).status(200).send('Ok.');
+    res.clearCookie('connect.sid', {domain:'smile-art-gestion.fr', path: '/'}).status(200).send('Ok.');
 }
 
 exports.GetSessionInfo = async (req,res, next) =>{

@@ -4,7 +4,7 @@ import { motion, useCycle} from "framer-motion";
 import { useDimensions } from "./use-dimension";
 import { MenuToggle } from "./MenuToggle";
 import { Navigation } from "./Navigation";
-import Navbar_hori from './Navbar_hori';
+import NavbarHori from './NavbarHori';
 import '../../css/navbar.css';
 
 const sidebar = {
@@ -39,7 +39,7 @@ export const Navbar = (props) => {
     animate={isOpen ? "open": "closed"}
     custom={height}
     ref={containerRef}>
-        <Navbar_hori delete={props.delete}/>
+        <NavbarHori delete={props.delete} lastname={props.user.lastname} username={props.user.username}/>
     </motion.div>
     
      <motion.nav className="navBar"

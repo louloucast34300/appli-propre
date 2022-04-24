@@ -42,7 +42,7 @@ useEffect(()=>{
 }
   return (
     <Router>
-        {user? <Navbar delete={deleteSession} />:<div></div>} 
+        {user? <Navbar delete={deleteSession} user={user}/>:<div></div>} 
     <div className="container-fluid main-view">
       <div className="row">
         <div className="col-lg-12">

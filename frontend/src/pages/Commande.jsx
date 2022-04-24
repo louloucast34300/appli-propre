@@ -14,12 +14,13 @@ const Commande = () => {
 
 const [calculTotalFlux,setCalculTotalFlux] = useState(0);
 const [popUpForm, setPopUpForm] = useState(false);
-const [messageSuccess, setMessageSuccess] = useState('')
+const [messageSuccess] = useState('')
 const [presta, setPresta] = useState([])
 const [client, setClient] = useState([]);
 const [patient, setPatient] = useState("");
 const [doctorName, setDoctorName] = useState([])
 const [date, setDate] = useState('')
+/* le flux de production */
 const [fluxList, setFluxList] = useState([]);
 const [flux, setFlux] = useState([
     {  presta:'',teintier:'', teinte:'', nbr_teeth:[], price_presta:'', remise_presta:''}
@@ -34,16 +35,17 @@ const [counterFlux, setCounterFlux] = useState(0);
 //push bon de livraison pour facturation
 const [verifyFluxSelected,setVerifyFluxSelected] = useState(0);
 const [fluxArray, setFLuxArray] = useState([])
-const [FactuType, setFactuType] = useState('')
+const [FactuType] = useState('')
 const [doctorFactu, setDoctorFactu] = useState('');
 
 // PopUp Facturation
 const [activeFactu, setActiveFactu] = useState(false);
-
-const handle_change_factu = (e) =>{
-    const value = e.target.value;
-    setFactuType(value)
-}
+//
+//const handle_change_factu = (e) =>{
+   // const value = e.target.value;
+   // setFactuType(value)
+//}
+//
 const handle_change_doctor_facture = (e) =>{
     const value = e.target.value;
     setDoctorFactu(value);
