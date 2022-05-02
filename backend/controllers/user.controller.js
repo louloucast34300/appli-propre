@@ -32,10 +32,13 @@ exports.SessionCreate = (req, res, next) =>{
     })(req, res, next);
 }
 
-exports.SessionDelete = (req, res, next)=>{
-    console.log("deconnecté")
-    //res.clearCookie('connect.sid', {path: '/'}).status(200).send('Ok.');
-    res.clearCookie('connect.sid', {domain:'www.smile-art-gestion.fr', path: '/'}).status(200).send('Ok.');
+exports.SessionDelete = async (req, res, next)=>{
+    await req.logout();
+    console.log("deconnecté");
+    res.clearCookie('connect.sid', {domain:'www.smile-art-gestion.fr',path: '/', httpOnly:true})
+    console.log("je passe ici");
+    return res.redirect('/connexion')
+    //res.clearCookie('connect.sid', {domain:'localhost', path: '/'}).status(200).send('Ok.');
 }
 
 exports.GetSessionInfo = async (req,res, next) =>{
