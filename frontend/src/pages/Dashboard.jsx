@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../css/dashboard.css';
 import {GiTireIronCross} from 'react-icons/gi'
 import {AiOutlineCheck} from 'react-icons/ai'
-import LineChart from '../charts/lineChart'
+
 
 
 const Dashboard = () => {
@@ -82,7 +82,7 @@ const handleDelete = async(e) =>{
                     <div className="card-dashboard chart-dashboard">
                         <p className="title-bloc-dash">Vue d'ensemble de l'annéee 2022</p>
                         <p className="subtitle-bloc-dash">Aperçu mois par mois</p>
-                        <LineChart/>
+             
                     </div>
                   </div>
                 </div>
