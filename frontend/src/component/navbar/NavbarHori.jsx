@@ -66,7 +66,6 @@ const deconnexion = props.delete;
         <motion.h4 className="elem-nav-hori" variants={variantsText}>{props.username} {props.lastname}  <AiOutlineUser/> </motion.h4>
         <button onClick={deconnexion} className="disconnect-btn"><AiOutlinePoweroff/><a class="disconnect-link" href="/connexion">Deconnexion</a></button>
         </div>
-      
     </motion.div>
   )
 }

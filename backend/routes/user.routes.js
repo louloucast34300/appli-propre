@@ -8,4 +8,5 @@ router.post('/', UserCreate);
 router.get('/user-info',GetSessionInfo);
 router.post('/signin', SessionCreate);
 router.get('/signout', SessionDelete);
+router.get('/test', (req, res)=> {res.send('test')});
 module.exports = router;

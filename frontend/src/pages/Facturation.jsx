@@ -31,7 +31,6 @@ const changeStatut = async (e) =>{
   const verifyCheck = checked ? "factu-def":"pro-format";
   await axios.get(`/api/factu/${verifyCheck}/${id}`);
   getData();
-
 };
 
 const cancelFactu = async (e) =>{
