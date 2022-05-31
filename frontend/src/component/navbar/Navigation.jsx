@@ -24,7 +24,7 @@ const variantText = {
 export const Navigation = ({toggle,open}) => {
     return(
         <>
-        <motion.ul className={open?"nav-open":"nav-close"} variants={variants}>
+        <motion.ul className={open?"nav-open":"nav-close"} variants={variants} style={open?{display:"block"}:{display:"none"}}>
         <motion.img className='logo-nav-verti' variants={variantText} src={Logo}/>
 {itemIds.map(i => (
   <MenuItem i={i} key={i} toggle={toggle}/>

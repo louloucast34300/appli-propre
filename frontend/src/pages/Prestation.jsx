@@ -101,7 +101,7 @@ const Prestation = () => {
                   <div className="row mb-4">
                     <div className="col">
                       <div className="form-outline">
-                        <select name="category" id="category">
+                        <select name="category" id="category" className="form-select">
                           <option value="prothèse adjointe résine">
                             Prothèse adjointe résine
                           </option>

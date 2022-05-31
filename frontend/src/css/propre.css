@@ -50,7 +50,7 @@ a, a:hover{text-decoration:none;}
 .adjust2{padding:3px 10px;}
 
 /*INPUT*/
-.input-style-1{background-color: transparent;border: none;border-bottom: 1px solid #B832A2;color:white;}
+.input-style-1{background-color: transparent;border: none;border-bottom: 1px solid #B832A2;color:white;margin :0px 0px 10px 0px}
 
 /*LABEL*/
 .label-style-1{color:white;}

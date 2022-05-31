@@ -106,7 +106,7 @@ const GET_TOTAL = (data, mounth, year) =>{
     const totalAll = arrayAll.reduce(reducer)
     const totalNotEnd = arrayNotEnd.reduce(reducer)
     const totalEnd = arrayEnd.reduce(reducer)
-    setTotal1([totalAll,totalNotEnd,totalEnd]);
+    setTotal1([Math.round(totalAll),Math.round(totalNotEnd),Math.round(totalEnd)]);
 }
 
 const handleMounth = (e) =>{
