@@ -2,19 +2,66 @@ import React,{useEffect, useState} from 'react'
 import axios from 'axios';
 
 import '../css/dashboard.css';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
+import { Bar } from 'react-chartjs-2';
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: false,
+      text: 'Chart.js Bar Chart',
+    },
+  },
+};
 
 const Dashboard = () => {
 
+  const labels = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
+
+ 
   const stringMounth = ['', 'Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
   const [mounth, setMounth] = useState('')
   const [facture, setFacture] = useState([]);
   const [total1, setTotal1] = useState([]); // tableau regroupant [toutes les factures, factures pro format, factures définitive]
-
+  const [graphData, setGraphData] = useState([])
+  console.log(graphData);
   const date = new Date();
   let t = date.getMonth()+1;
   let y = date.getFullYear();
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        
+        label: `C.A./mois de l'année ${y}`,
+        data: labels.map((item, index) =>  `${graphData[index]}`),
+        backgroundColor: 'rgba(184, 50, 162,1)',
+      },
+    ],
+  };
 
 useEffect(()=>{
   GET_FACTURE();
@@ -26,6 +73,7 @@ const GET_FACTURE = () =>{
     const response = res.data;
     setFacture(response)
     GET_TOTAL(response, t, y)// t = mois , y = annnée, response = data
+    GRAPH_DATA(response)
   })
 }
 
@@ -64,31 +112,88 @@ const GET_TOTAL = (data, mounth, year) =>{
 const handleMounth = (e) =>{
   const value =parseInt(e.target.value); // parse la valeur str -> nb
   GET_TOTAL(facture,value, y); // re-calcul selon le mois choisi 
+  setMounth(stringMounth[value]);
 }
 
+const GRAPH_DATA = (data) =>{
+  const a = data; // la data
+  const m = [1,2,3,4,5,6,7,8,9,10,11,12] // les mois
+  let arr = []
+  for(let i = 0; i <= m.length; i++){
+    let total = 0
+    for(let j = 0; j < a.length; j++){
+     const target = a[j].date_of_creation
+     let n1 = target.charAt(3);
+     let n2 = target.charAt(4);
+     let r = 0
+     if(n1 != 1){
+       r = parseInt(n2)
+     }
+     r = parseInt(n1+n2)
+     if(m[i] === r && !a[j].canceled ){
+       total += a[j].total
+     }
+    }
+    arr.push(total)
+  }
+  setGraphData(arr)
+}
   return (
    <> 
-   <h2>Facturation totale du mois de {mounth} : {total1[0]}€</h2>
-   <h2>Total en cours de facturation du mois de {mounth} : {total1[1]}€</h2>
-   <h2>Total facturé du mois de {mounth} : {total1[2]}€</h2>
-   <form action="">
-     <select name="chooseMounth" id="chooseMounth" onChange={handleMounth} style={{float:"right"}}>
-      <option defaultValue="">{mounth} {y}</option>
-      <option value="1">Janvier {y}</option>
-      <option value="2">Février {y}</option>
-      <option value="3">Mars {y}</option>
-      <option value="4">Avril {y}</option>
-      <option value="5">Mai {y}</option>
-      <option value="6">Juin {y}</option>
-      <option value="7">Juillet {y}</option>
-      <option value="8">Aout {y}</option>
-      <option value="9">Septembre {y}</option>
-      <option value="10">Octobre {y}</option>
-      <option value="11">Novembre {y}</option>
-      <option value="12">Décembre {y}</option>
-    </select>
-   </form>
-   
+   <div className="container-fluid dash-container">
+     <div className="row">
+       <div className="col-lg-12">
+         <div className="row">
+           <div className="col-3">
+             <div className="bloc-info-dash">
+               <p className="title-price">Facturation totale <br/> du mois de {mounth} {y} :</p>
+               <p className="dash-price">{total1[0]}€</p>
+             </div>
+           </div>
+           <div className="col-3">
+             <div className="bloc-info-dash">
+               <p className="title-price">Facturation en cours (pro format) <br/> du mois de {mounth} {y} :</p>
+               <p className="dash-price">{total1[1]}€</p>
+             </div>
+           </div>
+           <div className="col-3">
+             <div className="bloc-info-dash">
+               <p className="title-price">Facturation définitive <br/> du mois de {mounth} {y} :</p>
+               <p className="dash-price">{total1[2]}€</p>
+             </div>
+           </div>
+           <div className="col-3">
+             <div className="bloc-info-dash">
+             <p className="title-price">Choisir un autre mois :</p>
+             <form action="">
+               <select name="chooseMounth" id="chooseMounth" className="form-select" onChange={handleMounth}style={{color:"rgba(184, 50, 162,1)",fontWeight:"bold"}}>
+                <option defaultValue="">{mounth} {y}</option>
+                <option value="1">Janvier {y}</option>
+                <option value="2">Février {y}</option>
+                <option value="3">Mars {y}</option>
+                <option value="4">Avril {y}</option>
+                <option value="5">Mai {y}</option>
+                <option value="6">Juin {y}</option>
+                <option value="7">Juillet {y}</option>
+                <option value="8">Aout {y}</option>
+                <option value="9">Septembre {y}</option>
+                <option value="10">Octobre {y}</option>
+                <option value="11">Novembre {y}</option>
+                <option value="12">Décembre {y}</option>
+              </select>
+            </form>
+    
+             </div>
+           </div>
+         </div>
+         <div className="row">
+           <div className="col-lg-12">
+           <Bar options={options} data={data} />
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
    </>
   )
 }

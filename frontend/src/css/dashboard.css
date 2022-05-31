@@ -26,6 +26,52 @@
     min-height:330px;
     overflow: scroll;
 }
+
+
+/* NEW DASH*/
+
+.bloc-info-dash{
+    background-color:#F2FAFF;
+    padding:10px;
+    border-radius:10px;
+    box-shadow:0px 3px 15px -4px rgba(0,0,0,0.7);
+    min-height:130px;
+}
+.dash-container{
+    margin-top:40px;
+}
+.dash-price{
+    color:rgba(184, 50, 162,1);
+    font-size:20px;
+    font-weight:bold;
+}
+.title-price{
+    font-size:16px;
+}
+canvas{
+    margin-top:30px;
+    height:750px !important;
+}
+
+@media(max-width:1500px){canvas{height:550px !important;}}
+@media(max-width:1300px){canvas{height:350px !important;}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media(min-width:1910px){
     .note-content{
         min-height:387px;
