@@ -23,42 +23,118 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+export const verticalOptions = {
+  layout:{
+    padding:30
+  },
   responsive: true,
   plugins: {
+    tooltip:{
+      enabled:true,
+      textDirection:'rtl',
+      caretPadding:30,
+      bodyFont:{
+        size:44
+      },
+      footerFont:{
+        size:24
+      }
+
+    },
     legend: {
       position: 'top',
     },
+  },
+  elements:{
+    bar:{
+      backgroundColor: 'rgba(41, 41, 41,1)',
+      borderRadius:15,
+    }
+  }
+}
+
+export const options = {
+  events: ['click','mousemove'],
+  layout:{
+    padding:30
+  },
+  responsive: true,
+  plugins: {
+    tooltip:{
+      enabled:true,
+      textDirection:'rtl',
+      caretPadding:30,
+      bodyFont:{
+        size:44
+      },
+      footerFont:{
+        size:24
+      }
+
+    },
+    legend: {
+      maxWidth:10,
+      labels :{
+        font:{
+          size:24
+        }
+      },
+      position: 'top',
+    },
+    responsive: true,
+    maintainAspectRatio:true,
+    aspectRatio:2,
     title: {
       display: false,
       text: 'Chart.js Bar Chart',
     },
   },
+  elements:{
+    bar:{
+    backgroundColor: 'rgba(184, 50, 162,1)',
+    borderRadius:15,
+
+    }
+  }
 };
 
 const Dashboard = () => {
 
   const labels = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
 
- 
+  const CDC2021 = [0,0,0,0,0,0,5770,2001,4954,5500,5890,3874]
+
   const stringMounth = ['', 'Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
   const [mounth, setMounth] = useState('')
   const [facture, setFacture] = useState([]);
   const [total1, setTotal1] = useState([]); // tableau regroupant [toutes les factures, factures pro format, factures définitive]
   const [graphData, setGraphData] = useState([])
-  console.log(graphData);
+  const [toggleCA, setToggleCA] = useState(false);
+
   const date = new Date();
   let t = date.getMonth()+1;
   let y = date.getFullYear();
+
+  const verticalData = {
+    labels,
+    datasets: [
+      {
+        label: `€`,
+        data: labels.map((item,index) => CDC2021[index]),
+        hoverBackgroundColor: 'rgba(184, 50, 162,1)',
+   
+      }
+    ],
+  }
 
   const data = {
     labels,
     datasets: [
       {
-        
-        label: `C.A./mois de l'année ${y}`,
+        barPercentage:0.9,
+        label: `€`,
         data: labels.map((item, index) =>  `${graphData[index]}`),
-        backgroundColor: 'rgba(184, 50, 162,1)',
+        hoverBackgroundColor:'rgba(41,41,41,1)'
       },
     ],
   };
@@ -113,8 +189,11 @@ const handleMounth = (e) =>{
   const value =parseInt(e.target.value); // parse la valeur str -> nb
   GET_TOTAL(facture,value, y); // re-calcul selon le mois choisi 
   setMounth(stringMounth[value]);
+  setToggleCA(false)
 }
-
+const handleCA = () => {
+  setToggleCA(!toggleCA);
+}
 const GRAPH_DATA = (data) =>{
   const a = data; // la data
   const m = [1,2,3,4,5,6,7,8,9,10,11,12] // les mois
@@ -138,6 +217,7 @@ const GRAPH_DATA = (data) =>{
   }
   setGraphData(arr)
 }
+
   return (
    <> 
    <div className="container-fluid dash-container">
@@ -164,7 +244,7 @@ const GRAPH_DATA = (data) =>{
            </div>
            <div className="col-3">
              <div className="bloc-info-dash">
-             <p className="title-price">Choisir un autre mois :</p>
+             <p className="title-price">Choisir un autre mois en {y} :</p>
              <form action="">
                <select name="chooseMounth" id="chooseMounth" className="form-select" onChange={handleMounth}style={{color:"rgba(184, 50, 162,1)",fontWeight:"bold"}}>
                 <option defaultValue="">{mounth} {y}</option>
@@ -182,14 +262,16 @@ const GRAPH_DATA = (data) =>{
                 <option value="12">Décembre {y}</option>
               </select>
             </form>
-    
+            {toggleCA?<button className='disconnect-btn' onClick={handleCA} style={{backgroundColor:'rgba(41,41,41,1)'}}>Voir le chiffre d'affaire 2022</button>:<button className='disconnect-btn' onClick={handleCA}>Voir le chiffre d'affaire 2021</button>}
              </div>
            </div>
          </div>
          <div className="row">
-           <div className="col-lg-12">
-           <Bar options={options} data={data} />
-           </div>
+         <div className="col-lg-12">
+           {toggleCA?  <Bar options={verticalOptions} data={verticalData} />:<Bar options={options} data={data} />}
+           </div> 
+     
+        
          </div>
        </div>
      </div>

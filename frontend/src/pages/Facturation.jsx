@@ -11,6 +11,9 @@ const Facturation = () => {
 
 const [data, setData] = useState([]);
 const [cancelView, setCancelView] = useState(false);
+const [factureSearch, setFactureSearch] = useState('');
+const [doctorSearch, setDoctorSearch] = useState('');
+const [dateSearch, setDateSearch] = useState('');
 console.log(data);
 
 useEffect(()=>{
@@ -41,6 +44,21 @@ const cancelFactu = async (e) =>{
 const handleCancelView = () =>{
   setCancelView(!cancelView);
 }
+
+const handle_date_Search = (e) =>{
+  const value = e.target.value;
+  setDateSearch(value) 
+}
+
+const handle_doctor_Search = (e) =>{
+  const value = e.target.value;
+  setDoctorSearch(value) 
+}
+
+const handle_facture_Search = (e) =>{
+  const value = e.target.value;
+  setFactureSearch(value) 
+}
   return (
     <div>
       <div className="header-page">
@@ -51,18 +69,24 @@ const handleCancelView = () =>{
         <div className="row radius-top bg-1 p-10">
             <div className="col-lg-4 d-col-flex">
                 <label className="label-style-1" htmlFor="n_facture">N° de facture :</label>
-                <input className="input-style-1" type="text" id="n_facture"/>
+                <input className="input-style-1" type="text" id="n_facture" onChange={handle_facture_Search}/>
             </div>
             <div className="col-lg-4 d-col-flex">
                 <label  className="label-style-1" htmlFor="n_docteur">Docteur :</label>
-                <input  className="input-style-1" type="text" id="n_docteur"/>
+                <input  className="input-style-1" type="text" id="n_docteur" onChange={handle_doctor_Search}/>
             </div>
             <div className="col-lg-4 d-col-flex">
                 <label className="label-style-1" htmlFor="n_date">Date de la facture:</label>
-                <input className="input-style-1" type="text" id="n_date"/>
+                <input className="input-style-1" type="text" id="n_date" onChange={handle_date_Search}/>
             </div>
         </div>
-        {data.filter(el =>el.canceled === cancelView).slice(0).reverse().map((item,index)=>{
+        {data.filter((el) =>el.canceled === cancelView)
+        .filter((a)=>{
+          return a.date_of_creation.includes(dateSearch)
+      })
+        .slice(0)
+        .reverse()
+        .map((item,index)=>{
           return(
             <div key={index}className="row row-list">
               <div className="col-lg-1">
